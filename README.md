@@ -23,12 +23,17 @@
     src/image 是图片
 
 3、git初始和上传
+    git init 
+    git status
+    git add .
+    git commit -m "你的备注信息"
+    git push -u origin main
 
 ##引用网站
     [vue](https://cn.vuejs.org/guide/quick-start.html#creating-a-vue-application)
     [axios](https://www.axios-http.cn/)
     [vue-router](https://router.vuejs.org/zh/installation.html)
-    []()
+    [Element-plus](http://element-plus.org/zh-CN/guide/installation.html#%E7%8E%AF%E5%A2%83%E6%94%AF%E6%8C%81)
     []()
     []()
     []()

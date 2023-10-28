@@ -3,7 +3,6 @@
     <div class="box">
       <h1>welcome</h1>
       <div class="login-box">
-        <!-- @submit.prevent="login" -->
         <form>
           <div class="input-box">
             用户：<input
@@ -21,16 +20,15 @@
             /><br />
           </div>
 
-          <div class="btn-box">
-            <el-button @click="login()" class="btn-login" type="primary" plain
-              >登录</el-button
+          <div>
+            <el-button @click="login()" type="primary" plain>登录</el-button
+            ><br />
+            <!-- class="btn-box"   class="btn-login" class="btn-enroll" class="btn-forget"  -->
+            <el-button type="primary" plain>Primary</el-button>
+            <el-button @click="enroll()" type="primary" plain>注册</el-button
             ><br />
 
-            <el-button class="btn-enroll" @click="enroll()" type="primary" plain
-              >注册</el-button
-            ><br />
-
-            <el-button class="btn-forget" @click="forget()" type="primary" plain
+            <el-button @click="forget()" type="primary" plain
               >忘记密码</el-button
             ><br />
           </div>
@@ -41,35 +39,24 @@
 </template>
 <script>
 import axios from "axios";
-
 import { selectGroupKey } from "element-plus";
 import { compile, computed, ref } from "vue";
-// import forgetVue from "./forget.vue";
+import { ElButton } from "element-plus";
 
 const count = ref(0);
 export default {
   name: "login",
   data() {
-    //   `data` 是作为请求体被发送的数据
     return {
-      //初始化 username,password。
       username: "",
       password: "",
     };
   },
-  // 下面这个组件检测俩输入框是否有输入
-  // computed: {
-  //     cansubmit() {
-  //         const { username, password } = this.username
-  //         return Boolean(username && password)
-  //     }
-  // },
-  //methods是一个对象，里面可以有很多属性，如名字，还可以有方法，如函数login（）
+
   methods: {
     login() {
       let params = new URLSearchParams(); //应该是将params定义为对象吧
       params.append("username", this.username);
-      //这里this的对象应该是全局，但具体是多大不知道
       params.append("password", this.password);
       axios
         .post(`http://49.235.107.169:5000/token`, params, {
@@ -82,35 +69,12 @@ export default {
           const redata = ret.data;
           console.log(redata.access_token);
           console.log(ret);
-
-          localStorage.setItem("token", redata.access_token); //将token本地保存
-          /*
-    之后跳转到其他页面，以后每次前端之后的每一个对后8、‘4端的请求都要在请求头上带上token，
-    后端查看请求头是否有token，拿到token检查是否过期，返回对应状态给前端。 
-    */
-          console.log("55555");
-
+          localStorage.setItem("token", redata.access_token);
           this.$router.push("/home");
-          console.log("6666666");
-
           console.log(`试26546541试${this.username},${this.password}`);
-          // var a=document.getElementById("")
-          // console.log(a)
         });
     },
-
-    // login(){            //登录函数
-    //   if(this.username == "why"
-    //   && this.password == "123"){    //将来这里hui变成和后端返回数据的验证
-    //         this.$router.push("/home")
-    //         console.log(`试试${this.username},${this.password}`)
-    //       }else{
-    //         alert("密码或用户名错误")
-    //       }
-    // },
-
     enroll() {
-      //注册函数
       if (this.username != null && this.password != null) {
         axios
           .post(`http://49.235.107.169:5000/user`, {
@@ -121,8 +85,6 @@ export default {
             console.log(r);
             console.log("注册");
             this.$router.push("/forget");
-            // this.$router.push("/home");
-
             console.log("注册333");
           });
       } else {
@@ -139,7 +101,7 @@ export default {
 
 <style>
 .maxbox {
-  background: url("src/images/1.png") no-repeat;
+  background: url("../image/Loginbackground.jpg") no-repeat;
   width: 100%;
   height: 100%;
   position: fixed;
@@ -150,7 +112,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* background: url('src/images/1.png') no-repeat; */
+
   background-size: cover;
 }
 * {
@@ -161,14 +123,6 @@ export default {
 body {
   width: 100%;
   height: 100%;
-
-  /*margin: 0px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; */
-  /* background: url('src/images/1.png') no-repeat; */
-  /* background-size: cover; */
 }
 
 .box {
@@ -179,22 +133,16 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* boreder-top:1px solid rgba(255,255,·255,0.5);
-    boreder-left:1px solid rgba(255,255,255,0.5);
-    boreder-bottom:1px solid rgba(255,255,255,0.5);
-    boreder-right:1px solid rgba(255,255,255,0.5); */
   top: 1px solid rgba(255, 255, 255, 0.5);
   left: 1px solid rgba(255, 255, 255, 0.5);
   bottom: 1px solid rgba(255, 255, 255, 0.5);
   right: 1px solid rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(10px);
   background: rgba(50, 50, 50, 0.2);
-  /* background: url('src/images/1.png') no-repeat; */
 }
 
 .box > h2 {
   color: rgba(255, 255, 255, 0.9);
-  /* margin-botom: 20px; */
 }
 
 .box .input-box {
@@ -202,11 +150,9 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: start;
-  /* margin-botom: 10px; */
 }
 
 .box .input-box > label {
-  /* margin-botom: 5px; */
   color: rgba(255, 255, 255, 0.9);
   font-size: 13px;
 }
