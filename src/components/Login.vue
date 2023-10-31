@@ -31,6 +31,12 @@
             <el-button @click="forget()" type="primary" plain
               >忘记密码</el-button
             ><br />
+            <el-button type="primary" plain>
+              <RouterLink to="/work">work</RouterLink></el-button
+            ><br />
+            <el-button type="primary" plain
+              ><RouterLink to="/">login</RouterLink></el-button
+            ><br />
           </div>
         </form>
       </div>

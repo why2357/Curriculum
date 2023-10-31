@@ -1,10 +1,7 @@
 # 机房课程表
 
-
-
 ## 写代码历程
 1、创建文件夹
-    
         npm create vite@latest
         cd Curriculum
         npm install
@@ -22,7 +19,11 @@
     src/router 是路由目录
     src/image 是图片
 
-3、git初始和上传
+3、编写组件，并创建路由
+    路由router
+    组件login work 用于测试路由
+
+##git初始和上传
     git init 
     git status
     git add .

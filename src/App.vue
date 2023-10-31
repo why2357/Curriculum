@@ -1,10 +1,16 @@
 <script setup>
 import Login from "./components/Login.vue";
-import HelloWorld from "./components/Login.vue";
+import work from "./components/work.vue";
 </script>
 
 <template>
-  <Login msg="Vite + Vue" />
+  <!-- <Login /> -->
+  <!-- <work></work> -->
+  <div>
+    <RouterLink to="/">login</RouterLink>
+    <RouterLink to="/work">work</RouterLink>
+    <RouterView></RouterView>
+  </div>
 </template>
 
 <style scoped>
