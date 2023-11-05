@@ -7,5 +7,6 @@ import router from "./router/index.js";
 
 const app = createApp(App);
 app.use(router);
+app.config.warnHandler = () => null;
 app.use(ElementPlus); //在挂载app之前使用ElementPlus
 app.mount("#app");

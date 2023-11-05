@@ -7,8 +7,7 @@ import work from "./components/work.vue";
   <!-- <Login /> -->
   <!-- <work></work> -->
   <div>
-    <RouterLink to="/">login</RouterLink>
-    <RouterLink to="/work">work</RouterLink>
+    
     <RouterView></RouterView>
   </div>
 </template>

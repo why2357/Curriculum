@@ -19,9 +19,10 @@
     src/router 是路由目录
     src/image 是图片
 
-3、编写组件，并创建路由
+3、创建路由,并编写组件
     路由router
     组件login work 用于测试路由
+
 
 ##git初始和上传
     git init 
@@ -30,7 +31,7 @@
     git commit -m "你的备注信息"
     git push -u origin main
 
-##引用网站
+##引用插件网站
     [vue](https://cn.vuejs.org/guide/quick-start.html#creating-a-vue-application)
     [axios](https://www.axios-http.cn/)
     [vue-router](https://router.vuejs.org/zh/installation.html)

@@ -23,20 +23,6 @@
           <div>
             <el-button @click="login()" type="primary" plain>登录</el-button
             ><br />
-            <!-- class="btn-box"   class="btn-login" class="btn-enroll" class="btn-forget"  -->
-            <el-button type="primary" plain>Primary</el-button>
-            <el-button @click="enroll()" type="primary" plain>注册</el-button
-            ><br />
-
-            <el-button @click="forget()" type="primary" plain
-              >忘记密码</el-button
-            ><br />
-            <el-button type="primary" plain>
-              <RouterLink to="/work">work</RouterLink></el-button
-            ><br />
-            <el-button type="primary" plain
-              ><RouterLink to="/">login</RouterLink></el-button
-            ><br />
           </div>
         </form>
       </div>
@@ -65,41 +51,24 @@ export default {
       params.append("username", this.username);
       params.append("password", this.password);
       axios
-        .post(`http://49.235.107.169:5000/token`, params, {
+        .post(`http://49.235.107.169:5000/api/v1/login`, params, {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/x-www-form-urlencoded",
           },
         })
         .then((ret) => {
-          const redata = ret.data;
-          console.log(redata.access_token);
-          console.log(ret);
-          localStorage.setItem("token", redata.access_token);
-          this.$router.push("/home");
-          console.log(`试26546541试${this.username},${this.password}`);
+          if (ret.data.code != 200) {
+            console.log(`账号或密码错误`);
+            alert("账号或密码错误");
+          } else {
+            console.log(ret.data.code);
+            console.log(ret.data.token);
+            localStorage.setItem("token", ret.data.token);
+            this.$router.push("/work");
+            console.log(`试试${this.username},${this.password}`);
+          }
         });
-    },
-    enroll() {
-      if (this.username != null && this.password != null) {
-        axios
-          .post(`http://49.235.107.169:5000/user`, {
-            username: this.username,
-            password: this.password,
-          })
-          .then((r) => {
-            console.log(r);
-            console.log("注册");
-            this.$router.push("/forget");
-            console.log("注册333");
-          });
-      } else {
-        alert("输入不能为空！");
-      }
-    },
-
-    forget() {
-      this.$router.push("/forget");
     },
   },
 };
