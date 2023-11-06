@@ -1,12 +1,6 @@
 <script>
 import Login from "./components/Login.vue";
 import work from "./components/work.vue";
-
-export default {
-  components: {
-    Test,
-  },
-};
 </script>
 
 <template>
