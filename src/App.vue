@@ -1,14 +1,20 @@
-<script setup>
+<script>
 import Login from "./components/Login.vue";
 import work from "./components/work.vue";
+import Test from "./components/Test.vue";
+export default {
+  components: {
+    Test,
+  },
+};
 </script>
 
 <template>
   <!-- <Login /> -->
   <!-- <work></work> -->
   <div>
-    
     <RouterView></RouterView>
+    <Test />
   </div>
 </template>
 
