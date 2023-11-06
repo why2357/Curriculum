@@ -1,7 +1,7 @@
 <script>
 import Login from "./components/Login.vue";
 import work from "./components/work.vue";
-import Test from "./components/Test.vue";
+
 export default {
   components: {
     Test,
@@ -14,7 +14,6 @@ export default {
   <!-- <work></work> -->
   <div>
     <RouterView></RouterView>
-    <Test />
   </div>
 </template>
 
