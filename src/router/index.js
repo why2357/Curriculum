@@ -1,11 +1,15 @@
 import login from "../components/Login.vue";
 import work from "../components/work.vue";
+import Upload from "../components/Upload.vue";
+import menu from "../components/menu.vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 
 const routes = [
   { path: "/login", name: "login", component: login },
 
   { path: "/work", name: "work", component: work },
+  { path: "/upload", name: "upload", component: Upload },
+  { path: "/menu", name: "menu", component: menu },
 
   {
     path: "/:pathMatch(.*)*",

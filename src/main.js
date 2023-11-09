@@ -5,6 +5,7 @@ import request from "./router/intercept";
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
 import router from "./router/index.js";
+import { read, utils } from "xlsx"; // 引入方式
 
 const app = createApp(App);
 app.use(router);

@@ -8,6 +8,8 @@
         npm run dev
         npm install axios
         npm install vue-router@4
+        npm install element-plus --save
+        npm i xlsx -S
 
     
 2、统一项目结构
@@ -28,6 +30,17 @@
     使用生命周期请求了数据，
     添加下拉框选择楼层，
     点击下拉框在表格中显示信息
+
+5、登录保护
+    添加了路由守卫
+    添加了请求响应拦截器
+
+6、上传
+    添加上传页面，用于初次向数据库添加大量数据
+
+7、
+
+
 ##git初始和上传
     git init 
     git status
@@ -40,7 +53,7 @@
     [axios](https://www.axios-http.cn/)
     [vue-router](https://router.vuejs.org/zh/installation.html)
     [Element-plus](http://element-plus.org/zh-CN/guide/installation.html#%E7%8E%AF%E5%A2%83%E6%94%AF%E6%8C%81)
-    []()
+    [xlsx](https://www.npmjs.com/package/xlsx)
     []()
     []()
 

@@ -1,6 +1,7 @@
 <script>
 import Login from "./components/Login.vue";
 import work from "./components/work.vue";
+// import xlsxtest from "./components/testxlsx.vue";
 </script>
 
 <template>
@@ -9,19 +10,11 @@ import work from "./components/work.vue";
   <div>
     <RouterView></RouterView>
   </div>
+  <!-- <xlsxtest></xlsxtest> -->
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+<style>
+.body {
+  margin: 0;
 }
 </style>
