@@ -1,7 +1,11 @@
-<script>
+<script setup>
 import Login from "./components/Login.vue";
 import work from "./components/work.vue";
-// import xlsxtest from "./components/testxlsx.vue";
+import view from "./views/view.vue";
+
+// compoents: {
+//   main;
+// }
 </script>
 
 <template>
@@ -9,8 +13,8 @@ import work from "./components/work.vue";
   <!-- <work></work> -->
   <div>
     <RouterView></RouterView>
+    <!-- <view></view> -->
   </div>
-  <!-- <xlsxtest></xlsxtest> -->
 </template>
 
 <style>

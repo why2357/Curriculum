@@ -2,6 +2,7 @@ import login from "../components/Login.vue";
 import work from "../components/work.vue";
 import Upload from "../components/Upload.vue";
 import menu from "../components/menu.vue";
+import view from "../views/view.vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 
 const routes = [
@@ -10,6 +11,7 @@ const routes = [
   { path: "/work", name: "work", component: work },
   { path: "/upload", name: "upload", component: Upload },
   { path: "/menu", name: "menu", component: menu },
+  { path: "/view", name: "view", component: view },
 
   {
     path: "/:pathMatch(.*)*",

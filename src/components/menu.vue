@@ -1,5 +1,5 @@
 <template>
-  <div id="navigation_box">
+  <div id="menu">
     <el-menu
       default-active="2"
       class="el-menu-vertical-demo"
@@ -55,13 +55,13 @@ import {
 </script>
 
 <style>
-#navigation_box {
+#menu {
   width: 15%;
   height: 80%;
   background: rgb(255, 255, 255);
   position: absolute;
   left: 0;
-  top: 10%;
+  top: 60%;
   border-radius: 8px;
 }
 .el-menu-vertical-demo {

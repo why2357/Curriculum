@@ -21,8 +21,7 @@
           </div>
 
           <div>
-            <el-button @click="login()" type="primary" plain>登录</el-button
-            ><br />
+            <el-button @click="login()" type="primary">登录</el-button><br />
           </div>
         </form>
       </div>
@@ -65,7 +64,8 @@ export default {
             console.log(ret.data.code);
             console.log(ret.data.token);
             localStorage.setItem("token", ret.data.token);
-            this.$router.push("/work");
+            // this.$router.push("/work");
+            this.$router.push("/view");
             console.log(`试试${this.username},${this.password}`);
           }
         });
