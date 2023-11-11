@@ -17,10 +17,6 @@
       </el-table>
     </div>
   </div>
-
-  <div v-if="jsonData">
-    <pre>{{ jsonData }}</pre>
-  </div>
 </template>
 
 <script setup>
@@ -101,11 +97,12 @@ function handleFileUpload(event) {
           // ],
         },
       }).then((res) => {
-        if (res.data.code == 200) {
-          console.log("上传成功");
-        } else {
-          console.log("上传失败");
-        }
+        // if (res.data.code == 200) {
+        //   console.log("上传成功");
+        // } else {
+        //   console.log("上传失败");
+        //   console.log(res.data.code);
+        // }
       });
     };
     reader.readAsArrayBuffer(file);
@@ -121,9 +118,10 @@ function handleFileUpload(event) {
 
 <style>
 .input-file-button {
+  /* top: 100px; */
   padding: 6px 25px;
   background: rgb(73, 152, 252);
-
+  /* position: absolute; */
   border-radius: 4px;
   /* color: white; */
   cursor: pointer;

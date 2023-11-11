@@ -1,22 +1,39 @@
 import login from "../components/Login.vue";
-import work from "../components/work.vue";
-import Upload from "../components/Upload.vue";
+import table from "../components/table.vue";
 import menu from "../components/menu.vue";
 import view from "../views/view.vue";
+import upload from "../components/menu_content/Upload.vue";
+import search from "../components/menu_content/Search.vue";
+import arrange_room from "../components/menu_content/arrange_room.vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 
 const routes = [
   { path: "/login", name: "login", component: login },
-
-  { path: "/work", name: "work", component: work },
-  { path: "/upload", name: "upload", component: Upload },
+  { path: "/table", name: "table", component: table },
   { path: "/menu", name: "menu", component: menu },
-  { path: "/view", name: "view", component: view },
-
   {
-    path: "/:pathMatch(.*)*",
-    redirect: "/login",
+    path: "/view",
+    name: "view",
+    component: view,
+    children: [
+      {
+        path: "upload",
+        name: "upload",
+        component: upload,
+      },
+      {
+        path: "search",
+        name: "search",
+        component: search,
+      },
+      {
+        path: "arrange_room",
+        name: "arrange_room",
+        component: arrange_room,
+      },
+    ],
   },
+  { path: "/:pathMatch(.*)*", redirect: "/login" },
 ];
 
 const router = createRouter({

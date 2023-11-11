@@ -32,21 +32,22 @@
       </el-table-column>
     </el-table>
 
-    <el-dropdown>
-      <el-button type="primary">
-        选择楼层<el-icon class="el-icon--right"><arrow-down /></el-icon>
-      </el-button>
-      <template #dropdown>
-        <el-dropdown-menu>
-          <el-dropdown-item v-for="p in floor" @click="selectRoom(p)">
-            {{ p }}
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </template>
-    </el-dropdown>
-
-    <button><router-link to="/Upload">上传</router-link></button>
-    <button><router-link to="/menu">5555</router-link></button>
+    <div id="check_btn">
+      <el-dropdown>
+        <el-button type="primary">
+          选择楼层<el-icon class="el-icon--right"
+            ><arrow-down
+          /></el-icon> </el-button
+        >内容
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item v-for="p in floor" @click="selectRoom(p)">
+              {{ p }}
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
+    </div>
   </div>
 </template>
 
@@ -86,15 +87,23 @@ const selectRoom = (selectedRoom) => {
 <style>
 .table {
   margin: 0 auto;
-  width: 100%;
-  height: 55%;
+  /* width: 100%;
+  height: 55%; */
   background-color: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 0 10px #999999;
-  padding: 20px;
+  /* box-shadow: 0 0 10px #999999; */
+  /* padding: 5px; */
   margin: 0px;
   position: absolute;
   top: 0px;
+  left: 0px;
+}
+
+#check_btn {
+  position: absolute;
+  /* padding: 20px; */
+  margin: 0px;
+  top: 85%;
   left: 0px;
 }
 </style>

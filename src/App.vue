@@ -1,6 +1,6 @@
 <script setup>
 import Login from "./components/Login.vue";
-import work from "./components/work.vue";
+import table from "./components/table.vue";
 import view from "./views/view.vue";
 
 // compoents: {
@@ -10,7 +10,7 @@ import view from "./views/view.vue";
 
 <template>
   <!-- <Login /> -->
-  <!-- <work></work> -->
+  <!-- <table></table> -->
   <div>
     <RouterView></RouterView>
     <!-- <view></view> -->
@@ -20,5 +20,6 @@ import view from "./views/view.vue";
 <style>
 .body {
   margin: 0;
+
 }
 </style>
