@@ -16,8 +16,8 @@
       </router-link>
 
       <router-link to="/view/search">
-        <el-menu-item index="2"
-          >机房 <el-icon><Search /></el-icon>排列 搜索
+        <el-menu-item index="2">
+          <el-icon><Search /></el-icon>机房
         </el-menu-item>
       </router-link>
 
