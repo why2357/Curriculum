@@ -1,7 +1,7 @@
-<template>
-  <div>
+ <template> 
+    <div>  
     <!-- ****************   下拉框    ******************* -->
-    <div class="controls">
+     <div class="controls"> 
       <el-select
         v-model="selectedRoom"
         placeholder="请选择机房"
@@ -240,10 +240,11 @@ const getData = async () => {
     const response = await axios.get(
       //await使得在函数体内可以使用 await 来等待 axios.get 方法的异步操作完成
       //使用 await 来等待 fetch 和 response.json() 这两个异步操作完成
-      // "http://49.235.107.169:5000/api/v1/get_main_course"
-      "http://127.0.0.1:4523/m2/3490940-0-default/120696746?computer_room_name=C501"
+      "http://49.235.107.169:5000/api/v1/get_main_course"
+      // "http://127.0.0.1:4523/m2/3490940-0-default/120696746?computer_room_name=C501"
     );
     const rawData = response.data; //将后端数据给参数rawData
+    console.log(rawData)
     fullTableData.value = formatData(rawData); // 保存完整数据
     filterData(); // 过滤默认数据
   } catch (error) {
@@ -347,7 +348,8 @@ targetRow: 目标表格行的数据
 targetProp: 目标表格列的属性名称
 函数的主要目的是在拖放完成时更新表格数据。
 首先，它阻止浏览器默认的处理方式，通过调用 event.preventDefault() 防止浏览器对拖放行为的默认处理。
-然后，函数检查是否存在拖动的数据 (draggedData)。如果存在，它获取目标单元格 (targetValue) 的值，
+然后，函数检查是否存在拖动的数据 (draggedData)。
+如果存在，它获取目标单元格 (targetValue) 的值，
 然后根据情况进行处理：
 如果目标单元格为空或为占位符，直接将拖动的值复制到目标单元格，并将原始单元格标记为占位符。
 如果目标单元格不为空，交换拖动的值和目标单元格的值。
@@ -403,6 +405,7 @@ const filterData = () => {
 
 <style scoped>
 .course-table {
+ 
   margin: 5px;
   border: 3px solid #ebebeb;
 }
