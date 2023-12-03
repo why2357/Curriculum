@@ -1,5 +1,81 @@
-
 <template>
+   <!-- <div class="left">
+          <card
+          v-for="(kapian, index) of data.courses"
+          :cardName="kapian"
+          :card-key="cardKey"
+          @handle-Drag-End="handleDragEnd"
+          >
+
+          </card>
+      </div> -->
+      <div class="paike">
+        <!-- <card v-for="(item,id) in  rawData" :key="item.id">
+          {{ item.name  }}
+      <p>123</p>
+        </card> -->
+        <card 
+        msg="666" 
+        
+        v-for="(item) of rawData"
+        :key="item.id"
+        :rawData="item"
+        ></card>
+      </div>
+      <p>asda</p>
+</template>
+
+<script setup>  
+import { onMounted } from 'vue';
+import card from '../card.vue'
+import axios from 'axios';
+import { ref } from 'vue';
+
+let rawData = ref([]);
+onMounted (() => {
+  console.log('mounted!');
+  axios({
+    method: "get",
+    url: `http://49.235.107.169:5000/api/v1/get_origin_course`,
+  }).then((res) => {
+      rawData.value = res.data;
+  });
+});
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ************************************************************************************** -->
+<!-- <template>
   <p>541265165</p>
   <el-popover
     placement="top-start"
@@ -13,9 +89,9 @@
     </template>
   </el-popover>
   <h1>利用vuex把数据集中管理，随取随用</h1>
-</template>
+</template> -->
 
-<script >
+<!-- <script >
 import { InfoFilled } from '@element-plus/icons-vue'
 
 const confirmEvent = () => {
@@ -24,4 +100,4 @@ const confirmEvent = () => {
 const cancelEvent = () => {
   console.log('cancel!')
 }
-  </script>
+  </script> -->

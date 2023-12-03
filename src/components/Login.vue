@@ -22,6 +22,7 @@
 
           <div>
             <el-button @click="login()" type="primary">登录</el-button><br />
+            <el-button @click="enroll()" type="primary">注册</el-button><br />
           </div>
         </form>
       </div>
@@ -35,42 +36,92 @@ import { compile, computed, ref } from "vue";
 import { ElButton } from "element-plus";
 
 const count = ref(0);
+let username = ref("");
+let password = ref("");
+// const job_number = ref("");
+// const permission = ref(0);
+
 export default {
   name: "login",
   data() {
     return {
       username: "",
       password: "",
+      job_number: "",
+      permission: 0,
     };
   },
 
   methods: {
-    login() {
+    enroll() {
       let params = new URLSearchParams(); //应该是将params定义为对象吧
-      params.append("username", this.username);
-      params.append("password", this.password);
-      axios
-        .post(`http://49.235.107.169:5000/api/v1/login`, params, {
+      // params.append("username", this.username);
+      // params.append("password", this.password);
+      params.append("job_number", this.job_number);
+      params.append("permission", this.permission);
+      console.log(params);
+      axios.post(`http://49.235.107.169:5000/api/v1/create_user?
+        username=${username.value}&
+        password=${password.value}&`, params, {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/x-www-form-urlencoded",
           },
         })
         .then((ret) => {
-          if (ret.data.code != 200) {
+         console.log(ret.data);
+        });
+    },
+    login() {
+      let params = new URLSearchParams(); //应该是将params定义为对象吧
+      params.append("username", this.username);
+      params.append("password", this.password);
+      axios.post(`http://49.235.107.169:5000/api/v1/login`, params, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        })
+        .then((ret) => {
+          if (0) {
+          // if (ret.data.code != 200) {
             console.log(`账号或密码错误`);
             alert("账号或密码错误");
           } else {
-            console.log(ret.data.code);
-            console.log(ret.data.token);
             localStorage.setItem("token", ret.data.token);
             // this.$router.push("/work");
             this.$router.push("/view");
             console.log(`试试${this.username},${this.password}`);
           }
         });
+        
+      
     },
+    /***********************************************
+         * 注册
+         */
+       
+  // enroll() {
+  //   console.log(this.username);
+  //   console.log(this.permission);
+  //   console.log(this.password);
+  //   console.log(this.job_number);
+  //   axios.post(`http://49.235.107.169:5000/api/v1/create_user`,{
+  
+  //             username: this.username,
+  //             job_number: "string",
+  //             permission: 0,
+  //             password: this.password,
+            
+  //       }).then((ret) => {
+  //        console.log(ret.data);
+  //       });
+  // },
   },
+  
+  /************************************************
+   * 
+   */
 };
 </script>
 
