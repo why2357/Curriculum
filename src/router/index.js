@@ -54,7 +54,7 @@ router.beforeEach((to, from, next) => {
   // 否则允许继续路由导航
   else {
     next();
-    console.log("导航守卫成功，继续");
+    // console.log("导航守卫成功，继续");
 
     // return false
   }

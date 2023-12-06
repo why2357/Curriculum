@@ -1,88 +1,30 @@
 <template>
-  
   <div class="table">
     <!-- <el-table :data="tableData" style="width: 100%" height="90%"> -->
     <el-table :data="room" style="width: 100%" height="90%">
       <el-table-column fixed label="机房" width="150" prop="computerRoomName" />
 
-      <el-table-column label="星期一 " align="center">
-        <el-table-column label="上午" align="center">
-          <el-table-column label="1-2" align="center">
-            <card :tableData="tableData"></card>
-          </el-table-column>
-          <el-table-column label="3-4" align="center" prop="day"> </el-table-column>
+      <el-table-column
+        v-for="(weekDay, windex) of weekDay"
+        :label="weekDay"
+        align="center"
+      >
+        <el-table-column
+          v-for="(amORpm, akey) of amORpm"
+          :label="amORpm"
+          align="center"
+        >
+          <template v-for="(item, id) of timeMapping">
+            <el-table-column
+              v-if="shouldRenderTimeSlot(amORpm, item)"
+              :key="id"
+              :label="item.time"
+              align="center"
+            >
+              <card></card>
+            </el-table-column>
+          </template>
         </el-table-column>
-        <el-table-column label="下午" align="center">
-          <el-table-column label="5-6" align="center" prop="software"> </el-table-column>
-          <el-table-column label="7-8" align="center" prop="computerRoomName"> </el-table-column>
-        </el-table-column>
-        <el-table-column label="晚上" align="center"> </el-table-column>
-      </el-table-column>
-      <el-table-column label="星期二 ">
-        <el-table-column label="上午" prop="Tuesday">
-          <el-table-column label="1-2"> </el-table-column>
-          <el-table-column label="3-4"> </el-table-column>
-        </el-table-column>
-        <el-table-column label="下午">
-          <el-table-column label="5-6"> </el-table-column>
-          <el-table-column label="7-8"> </el-table-column>
-        </el-table-column>
-        <el-table-column label="晚上"> </el-table-column>
-      </el-table-column>
-      <el-table-column label="星期三 ">
-        <el-table-column label="上午" prop="Wednesday">
-          <el-table-column label="1-2"> </el-table-column>
-          <el-table-column label="3-4"> </el-table-column>
-        </el-table-column>
-        <el-table-column label="下午">
-          <el-table-column label="5-6"> </el-table-column>
-          <el-table-column label="7-8"> </el-table-column>
-        </el-table-column>
-        <el-table-column label="晚上"> </el-table-column>
-      </el-table-column>
-      <el-table-column label="星期四 ">
-        <el-table-column label="上午" prop="Thursday">
-          <el-table-column label="1-2"> </el-table-column>
-          <el-table-column label="3-4"> </el-table-column>
-        </el-table-column>
-        <el-table-column label="下午">
-          <el-table-column label="5-6"></el-table-column>
-          <el-table-column label="7-8"> </el-table-column>
-        </el-table-column>
-        <el-table-column label="晚上"> </el-table-column>
-      </el-table-column>
-      <el-table-column label="星期五 ">
-        <el-table-column label="上午" prop="Friday">
-          <el-table-column label="1-2"> </el-table-column>
-          <el-table-column label="3-4"> </el-table-column>
-        </el-table-column>
-        <el-table-column label="下午">
-          <el-table-column label="5-6"> </el-table-column>
-          <el-table-column label="7-8"> </el-table-column>
-        </el-table-column>
-        <el-table-column label="晚上"> </el-table-column>
-      </el-table-column>
-      <el-table-column label="星期六 ">
-        <el-table-column label="上午" prop="Saturday">
-          <el-table-column label="1-2"> </el-table-column>
-          <el-table-column label="3-4"> </el-table-column>
-        </el-table-column>
-        <el-table-column label="下午">
-          <el-table-column label="5-6"> </el-table-column>
-          <el-table-column label="7-8"> </el-table-column>
-        </el-table-column>
-        <el-table-column label="晚上"> </el-table-column>
-      </el-table-column>
-      <el-table-column label="星期日 ">
-        <el-table-column label="上午" prop="Sunday">
-          <el-table-column label="1-2"> </el-table-column>
-          <el-table-column label="3-4"> </el-table-column>
-        </el-table-column>
-        <el-table-column label="下午">
-          <el-table-column label="5-6"> </el-table-column>
-          <el-table-column label="7-8"> </el-table-column>
-        </el-table-column>
-        <el-table-column label="晚上"> </el-table-column>
       </el-table-column>
     </el-table>
 
@@ -91,7 +33,6 @@
         <el-button type="primary">
           选择楼层
           <el-icon class="el-icon--right"><arrow-down /> </el-icon>
-
         </el-button>
         <template #dropdown>
           <el-dropdown-menu>
@@ -104,7 +45,7 @@
     </div>
   </div>
 </template>
-  
+
 <script setup>
 import { ArrowDown } from "@element-plus/icons-vue";
 import axios from "axios";
@@ -113,7 +54,38 @@ import card from "./card.vue";
 
 let floor = ref();
 let tableData = ref([]);
-let room = ref([]);//用于存储所选楼层的数据,
+let room = ref([]); //用于存储所选楼层的数据,
+const weekDay = {
+  1: "星期一",
+  2: "星期二",
+  3: "星期三",
+  4: "星期四",
+  5: "星期五",
+  6: "星期六",
+  7: "星期日",
+};
+const amORpm = {
+  am: "上午",
+  pm: "下午",
+  night: "晚上",
+};
+const timeMapping = [
+  { time: "1-2", id: 0, belong: "上午" },
+  { time: "3-4", id: 1, belong: "上午" },
+  { time: "5-6", id: 2, belong: "下午" },
+  { time: "7-8", id: 3, belong: "下午" },
+  { time: "9-10", id: 4, belong: "晚上" },
+];
+
+var a = 0;
+function shouldRenderTimeSlot(amORpm, item) {
+  console.log(amORpm, item);
+  a++;
+  console.log(a);
+  //   return true;
+  return item.belong === amORpm;
+}
+
 onMounted(() => {
   /**获取所有楼层详细数据，并存储在tableData中
    * ***************************************
@@ -122,9 +94,9 @@ onMounted(() => {
     method: "get",
     url: `http://49.235.107.169:5000/api/v1/get_main_course`,
   }).then((res) => {
-    console.log(res.data[1].computerRoomName.substring(0, 2));
-    tableData.value = res.data;//将所有数据存储在tableData中
-    room.value = tableData.value;//将所有数据存储在room中，但room将用于存储所选楼层的数据
+    // console.log(res.data[1].computerRoomName.substring(0, 2));
+    tableData.value = res.data; //将所有数据存储在tableData中
+    room.value = tableData.value; //将所有数据存储在room中，但room将用于存储所选楼层的数据
     for (let i = 0; i < res.data.length; i++) {
       if (res.data[i].computerRoomName) {
       }
@@ -134,13 +106,16 @@ onMounted(() => {
   // 以下的axios是获取楼层的用于下拉框
   axios({
     method: "get",
-    url: `http://49.235.107.169:5000/api/v1/get_computer_room_floor`
+    url: `http://49.235.107.169:5000/api/v1/get_computer_room_floor`,
   }).then((res) => {
-    console.log(res.data.floor);
+    // console.log(res.data.floor);
     floor.value = Object.keys(res.data.floor);
-    console.log(floor.value);
+    // console.log(floor.value);
   });
-})
+  function test() {
+    console.log(room);
+  }
+});
 
 /*
 更新tableData，显示所选楼层的数据
@@ -149,31 +124,24 @@ onMounted(() => {
 则
 **************************************************** */
 
-
 const selectRoom = (selectedRoom) => {
   // tableData.value = room.value[selectedRoom];
   let a = 0;
-  room.value = [];//每次点击下拉框room都会清0再更新
+  room.value = []; //每次点击下拉框room都会清0再更新
   for (let i = 0; i < tableData.value.length; i++) {
     if (tableData.value[i].computerRoomName.substring(0, 2) == selectedRoom) {
       room.value[a] = tableData.value[i];
       a++;
       console.log(tableData.value[i].computerRoomName.substring(0, 2));
     } else {
-      console.log('此机房无数据');
+      console.log("此机房无数据");
       // alert('此层无机房');
       // break;//跳出循环
     }
   }
-  //  room.value = tableData.value.filter(item => 
-  //     item.computerRoomName.startsWith(selectedRoom));
 };
-
-function test() {
-  console.log(room);
-}
 </script>
-  
+
 <style>
 .table {
   margin: 0 auto;
@@ -187,7 +155,6 @@ function test() {
   position: absolute;
   top: 0px;
   left: 0px;
-
 }
 
 #check_btn {
@@ -198,48 +165,7 @@ function test() {
   top: 85%;
   left: 0px;
 }
-</style> 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</style>
 
 <!-- <template>
   <div class="board">
@@ -259,18 +185,18 @@ function test() {
       >
           <table border="1">
               <tr> -->
-                  <!-- ****************  th是表头  ****************************** -->
-                  <!-- <th>时间段/星期</th>
+<!-- ****************  th是表头  ****************************** -->
+<!-- <th>时间段/星期</th>
                   <th v-for="(weekday, index) of data.weekday" :key="index">
                       {{ weekday }}
                   </th>
               </tr> -->
 
-              <!-- ****************  tr是行，th代表给每一行的表头渲染一个time_slot  ****************************** -->
-              <!-- <tr v-for="(time_slot, index) of data.time_slot" :key="index">
+<!-- ****************  tr是行，th代表给每一行的表头渲染一个time_slot  ****************************** -->
+<!-- <tr v-for="(time_slot, index) of data.time_slot" :key="index">
                   <th class="time-slot"> {{ time_slot }}  </th> -->
-   <!-- ****************  td是列,循环7次，制造7列  ****************************** -->
-                  <!-- <td v-for="weekday in 7"
+<!-- ****************  td是列,循环7次，制造7列  ****************************** -->
+<!-- <td v-for="weekday in 7"
                       :data-weekday="weekday"
                       :data-time-slot="index"
                   > 
@@ -408,164 +334,16 @@ table {
 }
 </style>
   -->
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  <!-- ***************************************************************************
+
+<!-- ***************************************************************************
   *********************************************************************************
 ******************************************************************************
 *******************************************************************************
 ******************************************************************************* -->
- <!-- <template> 
+<!-- <template> 
     <div>   -->
-    <!-- ****************   下拉框    ******************* -->
-     <!-- <div class="controls"> 
+<!-- ****************   下拉框    ******************* -->
+<!-- <div class="controls"> 
       <el-select
         v-model="selectedRoom"
         placeholder="请选择机房"
@@ -578,22 +356,22 @@ table {
         <el-option label="C6" value="C6"></el-option>
       </el-select>
     </div> -->
-    <!-- ****************       ******************* -->
-    <!-- <div class="course-table">
+<!-- ****************       ******************* -->
+<!-- <div class="course-table">
       <el-table :data="tableData" border>
         <el-table-column prop="classroom" label="时间/机房" align="center" /> -->
 
-        <!-- 遍历星期几 -->
-        <!-- <el-table-column
+<!-- 遍历星期几 -->
+<!-- <el-table-column
           v-for="day in days"
           :key="day.en"
           :label="day.cn"
           align="center"
         > -->
-          <!-- 上午 -->
-          <!-- <el-table-column label="上午" align="center"> -->
-            <!-- 1-2节 -->
-            <!-- 这段代码是使用 Element-UI 中的 el-table-column 组件创建了一个表格列，
+<!-- 上午 -->
+<!-- <el-table-column label="上午" align="center"> -->
+<!-- 1-2节 -->
+<!-- 这段代码是使用 Element-UI 中的 el-table-column 组件创建了一个表格列，
               用于显示星期几的上午第一节（1-2节）的课程信息。以下是代码的关键部分解释：
 
 :prop="${day.en}Morning1"：这里使用了动态属性绑定，将列的 prop 属性绑定到一个动态生成的属性，
@@ -621,7 +399,7 @@ template 标签内部包含了一个插槽（slot），该插槽的名称是 def
 在模板的插槽中，通过条件判断渲染了不同的内容。
 如果单元格中有课程信息，显示该课程的名称、班级和教师信息，否则显示一个非断空格作为占位符。
 这样在拖动时，可以将课程信息拖放到其他单元格，实现课程的调整。 -->
-            <!-- <el-table-column
+<!-- <el-table-column
               :prop="`${day.en}Morning1`"
               label="1-2节"
               align="center"
@@ -642,15 +420,15 @@ template 标签内部包含了一个插槽（slot），该插槽的名称是 def
                     {{ row[column.property].teacherName }}
                   </div>
                   <div v-else> -->
-                    <!-- 非断空格作为占位符 -->
-                    <!-- &nbsp;
+<!-- 非断空格作为占位符 -->
+<!-- &nbsp;
                   </div>
                 </div>
               </template>
             </el-table-column> -->
 
-            <!-- 3-4节 -->
-            <!-- <el-table-column
+<!-- 3-4节 -->
+<!-- <el-table-column
               :prop="`${day.en}Morning2`"
               label="3-4节"
               align="center"
@@ -663,7 +441,7 @@ template 标签内部包含了一个插槽（slot），该插槽的名称是 def
                   @drop="onDrop($event, row, column.property)"
                   @dragover.prevent
                 > -->
-                  <!-- <div v-if="row[column.property]">
+<!-- <div v-if="row[column.property]">
                     {{ row[column.property].courseName }}
                     <br />
                     {{ row[column.property].className }}
@@ -671,18 +449,18 @@ template 标签内部包含了一个插槽（slot），该插槽的名称是 def
                     {{ row[column.property].teacherName }}
                   </div>
                   <div v-else> -->
-                    <!-- 非断空格作为占位符 -->
-                    <!-- &nbsp;
+<!-- 非断空格作为占位符 -->
+<!-- &nbsp;
                   </div>
                 </div>
               </template>
             </el-table-column>
           </el-table-column> -->
 
-          <!-- 下午 -->
-          <!-- <el-table-column label="下午" align="center"> -->
-            <!-- 5-6节 -->
-            <!-- <el-table-column
+<!-- 下午 -->
+<!-- <el-table-column label="下午" align="center"> -->
+<!-- 5-6节 -->
+<!-- <el-table-column
               :prop="`${day.en}Afternoon1`"
               label="5-6节"
               align="center"
@@ -703,14 +481,14 @@ template 标签内部包含了一个插槽（slot），该插槽的名称是 def
                     {{ row[column.property].teacherName }}
                   </div>
                   <div v-else> -->
-                    <!-- 非断空格作为占位符 -->
-                    <!-- &nbsp;
+<!-- 非断空格作为占位符 -->
+<!-- &nbsp;
                   </div>
                 </div>
               </template>
             </el-table-column> -->
-            <!-- 7-8节 -->
-            <!-- <el-table-column
+<!-- 7-8节 -->
+<!-- <el-table-column
               :prop="`${day.en}Afternoon2`"
               label="7-8节"
               align="center"
@@ -723,7 +501,7 @@ template 标签内部包含了一个插槽（slot），该插槽的名称是 def
                   @drop="onDrop($event, row, column.property)"
                   @dragover.prevent
                 > -->
-                  <!-- <div v-if="row[column.property]">
+<!-- <div v-if="row[column.property]">
                     {{ row[column.property].courseName }}
                     <br />
                     {{ row[column.property].className }}
@@ -731,31 +509,31 @@ template 标签内部包含了一个插槽（slot），该插槽的名称是 def
                     {{ row[column.property].teacherName }}
                   </div>
                   <div v-else> -->
-                    <!-- 非断空格作为占位符 -->
-                    <!-- &nbsp;
+<!-- 非断空格作为占位符 -->
+<!-- &nbsp;
                   </div>
                 </div>
               </template>
             </el-table-column>
           </el-table-column> -->
 
-          <!-- 晚上 -->
-          <!-- <el-table-column label="晚上" align="center"> -->
-            <!-- 9-10节 -->
-            <!-- <el-table-column
+<!-- 晚上 -->
+<!-- <el-table-column label="晚上" align="center"> -->
+<!-- 9-10节 -->
+<!-- <el-table-column
               :prop="`${day.en}Evening`"
               label="9-10节"
               align="center"
               width="180"
             > -->
-              <!-- <template v-slot:default="{ row, column }">
+<!-- <template v-slot:default="{ row, column }">
                 <div
                   :draggable="true"
                   @dragstart="onDragStart($event, row, column.property)"
                   @drop="onDrop($event, row, column.property)"
                   @dragover.prevent
                 > -->
-                  <!-- <div v-if="row[column.property]">
+<!-- <div v-if="row[column.property]">
                     {{ row[column.property].courseName }}
                     <br />
                     {{ row[column.property].className }}
@@ -763,9 +541,9 @@ template 标签内部包含了一个插槽（slot），该插槽的名称是 def
                     {{ row[column.property].teacherName }}
                   </div>
                   <div v-else> -->
-                    <!-- 非断空格作为占位符 -->
-                    <!-- &nbsp; -->
-                  <!-- </div>
+<!-- 非断空格作为占位符 -->
+<!-- &nbsp; -->
+<!-- </div>
                 </div>
               </template>
             </el-table-column>
@@ -776,7 +554,7 @@ template 标签内部包含了一个插槽（slot），该插槽的名称是 def
   </div> -->
 <!-- </template> -->
 
- <!-- <script setup>  
+<!-- <script setup>  
 // import { ref, onMounted, computed } from "vue";
 // import axios from "axios";
 

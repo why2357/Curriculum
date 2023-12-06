@@ -6,13 +6,26 @@
     @dragend="handleDragend"
     :data-key="cardKey"
   >
-    <p>{{ tableData[0].id }}</p>
+    <p>{{ tableData[2] }}</p>
 <!-- <button @click="test">test</button> -->
 <span class="remove-btn">del</span>
   </div>
 </template>
 
 <script setup>
+  //  [{
+  // "courseName": "无人机模拟训练",
+  //   "className": "23数媒01(专)",
+  //   "software": "无人机模拟器",
+  //   "day": "2",
+  //   "cycle": "1/16",
+  //   "teacherName": "钱永涛",
+  //   "id": 1,
+  //   "teacherRoom": "None",
+  //   "population": "50",
+  //   "computerRoomName": "B501",
+  //   "lesson": "1-2"
+  // },]
 // const props = defineProps(["course"]); // 定义props
 const props = defineProps({
   cardName: {
@@ -36,7 +49,7 @@ const props = defineProps({
     default: 'null',
   },
 }); // 定义props
-// console.log(rawData);
+
 const emit = defineEmits(["handleDragEnd"]); // emit 用于向父组件触发事件。defineEmits 是为了明确声明组件可以触发的事件
 
 function handleDragstart(e) {

@@ -9,20 +9,20 @@
 
           </card>
       </div> -->
-      <div class="paike">
-        <!-- <card v-for="(item,id) in  rawData" :key="item.id">
+      <!-- <div class="paike">
+        <card v-for="(item,id) in  rawData" :key="item.id">
           {{ item.name  }}
-      <p>123</p>
-        </card> -->
+      
+        </card> 
         <card 
         msg="666" 
         
         v-for="(item) of rawData"
-        :key="item.id"
-        :rawData="item"
+        :key="item"
+        :tableData="item"
         ></card>
-      </div>
-      <p>asda</p>
+      </div> -->
+      <!-- <pre>{{ tableData }}</pre> -->
 </template>
 
 <script setup>  
@@ -32,6 +32,15 @@ import axios from 'axios';
 import { ref } from 'vue';
 
 let rawData = ref([]);
+
+const props = defineProps({
+  tableData: {
+    type: Array,
+    default: 'null1',
+  },
+}); // 定义props
+console.log(props.tableData);
+
 onMounted (() => {
   console.log('mounted!');
   axios({
