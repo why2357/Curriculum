@@ -4,52 +4,119 @@
     draggable="true"
     @dragstart="handleDragstart"
     @dragend="handleDragend"
+    @mousedown="mouse_down"
     :data-key="cardKey"
+    v-if="determine_place()"
   >
-    <p>{{ tableData[2] }}</p>
-<!-- <button @click="test">test</button> -->
-<span class="remove-btn">del</span>
+    <el-popover
+      placement="top-start"
+      title="Title"
+      :width="200"
+      trigger="hover"
+      :content="`
+          ${room.courseName} 
+          ${room.className}
+          ${room.cycle}
+          ${room.teacherName}
+          ${room.id}
+          ${room.teacherRoom}
+          ${room.population}
+          ${room.computerRoomName}
+          ${room.lesson}`"
+    >
+      <template #reference>
+        {{ room.courseName }}
+      </template>
+    </el-popover>
   </div>
 </template>
 
 <script setup>
-  //  [{
-  // "courseName": "无人机模拟训练",
-  //   "className": "23数媒01(专)",
-  //   "software": "无人机模拟器",
-  //   "day": "2",
-  //   "cycle": "1/16",
-  //   "teacherName": "钱永涛",
-  //   "id": 1,
-  //   "teacherRoom": "None",
-  //   "population": "50",
-  //   "computerRoomName": "B501",
-  //   "lesson": "1-2"
-  // },]
-// const props = defineProps(["course"]); // 定义props
+//  [{
+// "courseName": "无人机模拟训练",
+//   "className": "23数媒01(专)",
+//   "software": "无人机模拟器",
+//   "day": "2",
+//   "cycle": "1/16",
+//   "teacherName": "钱永涛",
+//   "id": 1,
+//   "teacherRoom": "None",
+//   "population": "50",
+//   "computerRoomName": "B501",
+//   "lesson": "1-2"
+// },]
 const props = defineProps({
   cardName: {
     type: Object,
-    default: 'null',
+    default: "null",
   },
   cardKey: {
     type: String,
-    default: 'null',
+    default: "null",
   },
   rawData: {
     type: Object,
-    default: 'null',
+    default: "null",
   },
   tableData: {
     // type: Array,
-    default: 'null',
+    default: "null",
   },
-  msg: {
-    type: String,
-    default: 'null',
+  room: {
+    // type: Array,
+    default: "null1",
+  },
+  weekDay: {
+    // type: String,
+    default: "null",
+  },
+  item: {
+    //即该单元格代表的时间，如1-2节
+    // type: String,
+    default: "null",
+  },
+  computerRoomName: {
+    // type: String,
+    default: "null",
   },
 }); // 定义props
 
+import { ref, onMounted } from "vue";
+onMounted(() => {
+  // console.log(item);
+  // console.log(weekDay);
+  // console.log(computerRoomName);
+});
+
+// console.log(computerRoomName);
+// 因为后端返回的星期是day:2这种，而我设定为props.weekDay是星期一这种格式，所以需要转换一下格式
+const day = {
+  星期一: "1",
+  星期二: "2",
+  星期三: "3",
+  星期四: "4",
+  星期五: "5",
+  星期六: "6",
+  星期七: "7",
+};
+//利用表格中的机房，星期，时间判断该数据是否处于这一格
+//如果后端的机房，星期，时间和前端一样则通过
+function determine_place() {
+  let weekDayNumber = day[props.weekDay];
+  // console.log(weekDayNumber);
+  if (
+    props.room.computerRoomName == props.computerRoomName &&
+    props.room.lesson == props.item.time &&
+    props.room.day == weekDayNumber
+  ) {
+    // console.log(props.item.time);
+    return true;
+  }
+}
+/******************************************************
+ * 以下为拖拽相关代码
+ *
+ */
 const emit = defineEmits(["handleDragEnd"]); // emit 用于向父组件触发事件。defineEmits 是为了明确声明组件可以触发的事件
 
 function handleDragstart(e) {
@@ -72,9 +139,24 @@ function handleDragend(e) {
    */
   emit("handleDragEnd", tar);
 }
+// function mouse_down(e) {
+//   console.log("mouse_enter");
+//   console.log(e.target);
+// }
+/****************************************************************************
+ * 以下为双击显示代码
+ */
+var isShow = ref(false);
+function Complete_information() {
+  console.log(isShow);
+  isShow = true;
+  console.log(isShow);
+}
 function test() {
-  console.log(props.tableData);
-} 
+  console.log(isShow);
+  isShow = false;
+  console.log(isShow);
+}
 </script>
 <style>
 .ka {
@@ -98,5 +180,9 @@ function test() {
   top: 10px;
   right: 10px;
   color: #eb7c7c;
+}
+
+.el-button + .el-button {
+  margin-left: 8px;
 }
 </style>

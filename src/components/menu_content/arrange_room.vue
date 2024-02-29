@@ -1,15 +1,20 @@
 <template>
-   <!-- <div class="left">
+  <p>
+    1、获得本card的内容 。<br />
+    2、拖拽获得途径和终点的内容。<br />
+    3、交换两div内容。或删除交换后的
+  </p>
+  <!-- <div class="left">
           <card
           v-for="(kapian, index) of data.courses"
           :cardName="kapian"
           :card-key="cardKey"
           @handle-Drag-End="handleDragEnd"
           >
-
+    
           </card>
       </div> -->
-      <!-- <div class="paike">
+  <!-- <div class="paike">
         <card v-for="(item,id) in  rawData" :key="item.id">
           {{ item.name  }}
       
@@ -22,66 +27,35 @@
         :tableData="item"
         ></card>
       </div> -->
-      <!-- <pre>{{ tableData }}</pre> -->
+  <!-- <pre>{{ tableData }}</pre> -->
 </template>
 
-<script setup>  
-import { onMounted } from 'vue';
-import card from '../card.vue'
-import axios from 'axios';
-import { ref } from 'vue';
+<script setup>
+import { onMounted } from "vue";
+import card from "../card.vue";
+import axios from "axios";
+import { ref } from "vue";
 
 let rawData = ref([]);
 
 const props = defineProps({
   tableData: {
     type: Array,
-    default: 'null1',
+    default: "null1",
   },
 }); // 定义props
 console.log(props.tableData);
 
-onMounted (() => {
-  console.log('mounted!');
+onMounted(() => {
+  console.log("mounted!");
   axios({
     method: "get",
     url: `http://49.235.107.169:5000/api/v1/get_origin_course`,
   }).then((res) => {
-      rawData.value = res.data;
+    rawData.value = res.data;
   });
 });
-
-
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <!-- ************************************************************************************** -->
 <!-- <template>

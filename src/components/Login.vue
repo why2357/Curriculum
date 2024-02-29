@@ -54,37 +54,43 @@ export default {
 
   methods: {
     enroll() {
-      let params = new URLSearchParams(); //应该是将params定义为对象吧
+      let params = new URLSearchParams(); //将URLSearchParams的方法赋予给params
       // params.append("username", this.username);
       // params.append("password", this.password);
       params.append("job_number", this.job_number);
       params.append("permission", this.permission);
       console.log(params);
-      axios.post(`http://49.235.107.169:5000/api/v1/create_user?
+      axios
+        .post(
+          `http://49.235.107.169:5000/api/v1/create_user?
         username=${username.value}&
-        password=${password.value}&`, params, {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        })
+        password=${password.value}&`,
+          params,
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+          }
+        )
         .then((ret) => {
-         console.log(ret.data);
+          console.log(ret.data);
         });
     },
     login() {
-      let params = new URLSearchParams(); //应该是将params定义为对象吧
+      let params = new URLSearchParams();
       params.append("username", this.username);
       params.append("password", this.password);
-      axios.post(`http://49.235.107.169:5000/api/v1/login`, params, {
+      axios
+        .post(`http://49.235.107.169:5000/api/v1/token`, params, {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/x-www-form-urlencoded",
           },
         })
         .then((ret) => {
-          if (0) {
-          // if (ret.data.code != 200) {
+          // if (0) {
+          if (ret.data.code != 200) {
             console.log(`账号或密码错误`);
             alert("账号或密码错误");
           } else {
@@ -94,33 +100,31 @@ export default {
             console.log(`试试${this.username},${this.password}`);
           }
         });
-        
-      
     },
     /***********************************************
-         * 注册
-         */
-       
-  // enroll() {
-  //   console.log(this.username);
-  //   console.log(this.permission);
-  //   console.log(this.password);
-  //   console.log(this.job_number);
-  //   axios.post(`http://49.235.107.169:5000/api/v1/create_user`,{
-  
-  //             username: this.username,
-  //             job_number: "string",
-  //             permission: 0,
-  //             password: this.password,
-            
-  //       }).then((ret) => {
-  //        console.log(ret.data);
-  //       });
-  // },
+     * 注册
+     */
+
+    // enroll() {
+    //   console.log(this.username);
+    //   console.log(this.permission);
+    //   console.log(this.password);
+    //   console.log(this.job_number);
+    //   axios.post(`http://49.235.107.169:5000/api/v1/create_user`,{
+
+    //             username: this.username,
+    //             job_number: "string",
+    //             permission: 0,
+    //             password: this.password,
+
+    //       }).then((ret) => {
+    //        console.log(ret.data);
+    //       });
+    // },
   },
-  
+
   /************************************************
-   * 
+   *
    */
 };
 </script>
