@@ -1,13 +1,13 @@
 import axios from "axios";
-
 const request = axios.create();
 
 // 请求拦截器，请求拦截器发送token给后端验证，并且用响应拦截器保护页面
 axios.interceptors.request.use(
-  (config) => {
+  (config) => { 
     const token = localStorage.getItem("token");
-    if (token) config.headers.Authorization = `Bearer${token}`;
+    if (token) config.headers.Authorization = `Bearer ${token}`;
     // console.log("请求拦截器启动");
+    
     return config;
   },
   (error) => {
@@ -24,6 +24,7 @@ axios.interceptors.response.use(
   },
   function (error) {
     // 超出 2xx 范围的状态码都会触发
+    console.log(error);
     return Promise.reject(error);
   }
 );

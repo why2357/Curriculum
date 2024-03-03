@@ -82,22 +82,23 @@ export default {
       params.append("username", this.username);
       params.append("password", this.password);
       axios
-        .post(`http://49.235.107.169:5000/api/v1/token`, params, {
+        .post(`http://49.235.107.169:5000/api/v1/user_login`, params, {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/x-www-form-urlencoded",
           },
         })
         .then((ret) => {
-          // if (0) {
-          if (ret.data.code != 200) {
+          console.log(ret.request.status);
+          if (ret.request.status != 200) {
             console.log(`账号或密码错误`);
             alert("账号或密码错误");
           } else {
-            localStorage.setItem("token", ret.data.token);
+            localStorage.setItem("token", ret.data.access_token);
+
+            console.log(ret.data.access_token);
             // this.$router.push("/work");
             this.$router.push("/view");
-            console.log(`试试${this.username},${this.password}`);
           }
         });
     },

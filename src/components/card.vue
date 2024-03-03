@@ -1,13 +1,6 @@
 <template>
-  <div
-    class="ka"
-    draggable="true"
-    @dragstart="handleDragstart"
-    @dragend="handleDragend"
-    @mousedown="mouse_down"
-    :data-key="cardKey"
-    v-if="determine_place()"
-  >
+  <!-- *******************以下为详细课表的卡片********************** -->
+  <div class="ka" draggable="true" :data-key="cardKey" v-if="determine_place()">
     <el-popover
       placement="top-start"
       title="Title"
@@ -22,29 +15,25 @@
           ${room.teacherRoom}
           ${room.population}
           ${room.computerRoomName}
-          ${room.lesson}`"
+          ${room.lesson}
+          `"
     >
       <template #reference>
         {{ room.courseName }}
+
+        <p>6515</p>
       </template>
     </el-popover>
+  </div>
+  <!-- *********以下为原始课表的卡片********************************** -->
+  <div>
+    {{ rawData.teacher_name }}<br />
+    id:{{ rawData.id }}<br />
+    isok:{{ rawData.is_ok }}<br />
   </div>
 </template>
 
 <script setup>
-//  [{
-// "courseName": "无人机模拟训练",
-//   "className": "23数媒01(专)",
-//   "software": "无人机模拟器",
-//   "day": "2",
-//   "cycle": "1/16",
-//   "teacherName": "钱永涛",
-//   "id": 1,
-//   "teacherRoom": "None",
-//   "population": "50",
-//   "computerRoomName": "B501",
-//   "lesson": "1-2"
-// },]
 const props = defineProps({
   cardName: {
     type: Object,
@@ -56,7 +45,7 @@ const props = defineProps({
   },
   rawData: {
     type: Object,
-    default: "null",
+    default: () => [],
   },
   tableData: {
     // type: Array,
@@ -81,15 +70,12 @@ const props = defineProps({
   },
 }); // 定义props
 
-import { ref, onMounted } from "vue";
-onMounted(() => {
-  // console.log(item);
-  // console.log(weekDay);
-  // console.log(computerRoomName);
-});
-
+import axios from "axios";
+import { ref, onMounted, watch } from "vue";
+const localRawData = ref([]);
 // console.log(computerRoomName);
-// 因为后端返回的星期是day:2这种，而我设定为props.weekDay是星期一这种格式，所以需要转换一下格式
+// 因为后端返回的星期是day:2这种，
+// 而我设定为props.weekDay是星期一这种格式，所以需要转换一下格式
 const day = {
   星期一: "1",
   星期二: "2",
@@ -99,8 +85,26 @@ const day = {
   星期六: "6",
   星期七: "7",
 };
-//利用表格中的机房，星期，时间判断该数据是否处于这一格
-//如果后端的机房，星期，时间和前端一样则通过
+
+/**
+ * 以下为获得处理原始课表相关代码
+ * 使用props.rawData接收父组件传递的数据,使用watch 监听rawData变化
+ * rawData初始为[],当rawData变化时，将其赋值给localRawData, 从而实现数据的传递
+ */
+// 使用 watch 监听 rawData 变化
+
+// watch(
+//   () => props.rawData,
+//   (newRawData) => {
+//     console.log(newRawData);
+//     localRawData.value = newRawData;
+//   }
+// );
+/****************************************************************************
+ *利用表格中的机房，星期，时间判断该数据是否处于这一格
+ *如果后端的机房，星期，时间和前端一样则通过
+ *
+ */
 function determine_place() {
   let weekDayNumber = day[props.weekDay];
   // console.log(weekDayNumber);
@@ -157,6 +161,19 @@ function test() {
   isShow = false;
   console.log(isShow);
 }
+//  [{
+// "courseName": "无人机模拟训练",
+//   "className": "23数媒01(专)",
+//   "software": "无人机模拟器",
+//   "day": "2",
+//   "cycle": "1/16",
+//   "teacherName": "钱永涛",
+//   "id": 1,
+//   "teacherRoom": "None",
+//   "population": "50",
+//   "computerRoomName": "B501",
+//   "lesson": "1-2"
+// },]
 </script>
 <style>
 .ka {
