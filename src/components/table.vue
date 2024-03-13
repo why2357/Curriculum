@@ -119,11 +119,21 @@ onMounted(() => {
   }).then((res) => {
     // console.log(res.data[1].computerRoomName.substring(0, 2));
     // 假设获取的数据为 res.data
+<<<<<<< HEAD
     console.log(res);
     const uniqueRooms = removeDuplicateRooms(res.data); // 调用 removeDuplicateRooms 函数处理数据
     tableData.value = uniqueRooms; // 将处理后的数据存储在 tableData 中
     room.value = uniqueRooms; // 将处理后的数据存储在 room 中
     console.log(tableData.value);
+=======
+
+    console.log(res.data);
+    const uniqueRooms = removeDuplicateRooms(res.data);
+    tableData.value = uniqueRooms; // 将处理后的数据存储在 tableData 中
+    room.value = uniqueRooms; // 将处理后的数据存储在 room 中
+    console.log(tableData.value);
+    console.log(room.value);
+>>>>>>> 39e2870dce973008debb4dadcb21a2dd161e3ca5
   });
 
   /******************************************************
@@ -172,10 +182,14 @@ const selectRoom = (selectedRoom) => {
   room.value = []; //每次点击下拉框room都会清0再更新
 
   for (let i = 0; i < tableData.value.length; i++) {
-    // console.log(tableData.value[i].computerRoomName.substring(0, 1));
+    // console.log(tableData.value[i].computer_room_name.substring(0, 1));
     // console.log(selectedRoom);
     if (tableData.value[i].computer_room_name.substring(0, 1) == selectedRoom) {
+<<<<<<< HEAD
       console.log(tableData.value.computer_room_name);
+=======
+      console.log(tableData.value[i].computer_room_name);
+>>>>>>> 39e2870dce973008debb4dadcb21a2dd161e3ca5
       room.value[a] = tableData.value[i];
       a++;
     } else {

@@ -7,33 +7,46 @@
       :width="200"
       trigger="hover"
       :content="`
-          ${room.courseName} 
-          ${room.className}
+          ${room.course_name} 
+          ${room.class_name}
           ${room.cycle}
-          ${room.teacherName}
+          ${room.teacher_name}
           ${room.id}
-          ${room.teacherRoom}
+          ${room.teacher_room}
           ${room.population}
           ${room.computer_room_name}
           ${room.lesson}
+          ${rawData.id}
+          ${rawData.is_ok}
           `"
     >
       <template #reference>
         {{ room.computer_room_name }}
+<<<<<<< HEAD
         {{ rawData.id }}
         {{ rawData.teacher_name }}
         {{ rawData.id }}
         {{ rawData.is_ok }}
         <p>6515</p>
+=======
+        {{ room.id }}
+        {{ room.cycle }}
+        {{ rawData.teacher_name }}
+        {{ rawData.id }}
+        {{ rawData.is_ok }}
+>>>>>>> 39e2870dce973008debb4dadcb21a2dd161e3ca5
       </template>
     </el-popover>
   </div>
   <!-- *********以下为原始课表的卡片********************************** -->
+<<<<<<< HEAD
   <!-- <div>
     {{ rawData.teacher_name }}<br />
     id:{{ rawData.id }}<br />
     isok:{{ rawData.is_ok }}<br />
   </div> -->
+=======
+>>>>>>> 39e2870dce973008debb4dadcb21a2dd161e3ca5
 </template>
 
 <script setup>
@@ -47,16 +60,16 @@ const props = defineProps({
     default: "null",
   },
   rawData: {
-    type: Object,
-    default: () => [],
+    type: Array,
+    default: () => [], //懒加载
   },
   tableData: {
     // type: Array,
     default: "null",
   },
   room: {
-    // type: Array,
-    default: "null1",
+    type: Object,
+    // default: "null",
   },
   weekDay: {
     // type: String,
@@ -67,10 +80,17 @@ const props = defineProps({
     // type: String,
     default: "null",
   },
+<<<<<<< HEAD
   computer_room_name: {
     // type: String,
     default: "null",
   },
+=======
+  // computer_room_name: {
+  //   // type: String,
+  //   default: "null",
+  // },
+>>>>>>> 39e2870dce973008debb4dadcb21a2dd161e3ca5
 }); // 定义props
 
 import axios from "axios";
@@ -109,7 +129,11 @@ const day = {
  *
  */
 function determine_place() {
+  console.log(props.rawData);
+  // console.log(props.weekDay);
+
   let weekDayNumber = day[props.weekDay];
+<<<<<<< HEAD
   let my_lesson = eval(props.item.time);
   let back_lesson = eval(props.room.lesson);
   console.log(my_lesson);
@@ -131,7 +155,21 @@ function determine_place() {
         return true;
       }
     }
+=======
+  if (
+    props.room.computer_room_name == props.computer_room_name &&
+    props.room.lesson == props.item.time &&
+    props.room.day == weekDayNumber
+  ) {
+    // console.log(props.rawData);
+    console.log(props.room);
+    return true;
+    // if (props.rawData) {
+    //   // return true; // 返回 true 表示当前卡片需要显示
+    // }
+>>>>>>> 39e2870dce973008debb4dadcb21a2dd161e3ca5
   }
+  // 返回 false asx/aZ表示当前卡片不需要显示
 }
 /******************************************************
  * 以下为拖拽相关代码
@@ -164,32 +202,20 @@ function handleDragend(e) {
 //   console.log(e.target);
 // }
 /****************************************************************************
+0
  * 以下为双击显示代码
  */
-var isShow = ref(false);
-function Complete_information() {
-  console.log(isShow);
-  isShow = true;
-  console.log(isShow);
-}
-function test() {
-  console.log(isShow);
-  isShow = false;
-  console.log(isShow);
-}
-//  [{
-// "courseName": "无人机模拟训练",
-//   "className": "23数媒01(专)",
-//   "software": "无人机模拟器",
-//   "day": "2",
-//   "cycle": "1/16",
-//   "teacherName": "钱永涛",
-//   "id": 1,
-//   "teacherRoom": "None",
-//   "population": "50",
-//   "computerRoomName": "B501",
-//   "lesson": "1-2"
-// },]
+// var isShow = ref(false);
+// function Complete_information() {
+//   console.log(isShow);
+//   isShow = true;
+//   console.log(isShow);
+// }
+// function test() {
+//   console.log(isShow);
+//   isShow = false;
+//   console.log(isShow);
+// }
 </script>
 <style>
 .ka {
