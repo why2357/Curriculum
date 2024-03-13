@@ -1,0 +1,29 @@
+{
+  "data": [
+  {
+  "teacher_name": "杨爱民",
+  "course_name": "网络操作系统",
+  "class_name": "21计算机网络01（驻）",
+  "population": 55,
+  "software_name": "cisco packet tracer",
+  "computer_room_name": "C501",
+  "day": "2",
+  "lesson": "1-2",
+  "cycle": "19",
+  "teacher_room": "网络"
+},
+  {
+  "teacher_name": "段红玉",
+  "course_name": "网络安全技术",
+  "class_name": "22计算机网络（专）03",
+  "population": 54,
+  "software_name": "Photoshop",
+  "computer_room_name": "C603",
+  "day": "2",
+  "lesson": "0-6",
+  "cycle": "19",
+  "teacher_room": "网络"
+},
+  
+  ]
+}

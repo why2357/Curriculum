@@ -1,7 +1,12 @@
 <template>
   <div class="table">
     <el-table :data="room" style="width: 100%" height="90%">
-      <el-table-column fixed label="机房" prop="computerRoomName" width="150" />
+      <el-table-column
+        fixed
+        label="机房"
+        prop="computer_room_name"
+        width="150"
+      />
 
       <el-table-column
         v-for="(weekDay, windex) of weekDay"
@@ -34,7 +39,7 @@
                   :room="room"
                   :weekDay="weekDay"
                   :item="item"
-                  :computerRoomName="row.computerRoomName"
+                  :computer_room_name="row.computer_room_name"
                   @dragover="handleDragOver"
                   @dragenter="handleDragEnter"
                   @dragend="handleDragEnd"
@@ -108,32 +113,20 @@ onMounted(() => {
   /**获取所有楼层详细数据，并存储在tableData中
    * ***************************************
    */
-  // axios({
-  //   method: "get",
-  //   url: `http://49.235.107.169:5000/api/v1/get_origin_class_all`,
-  // }).then((res) => {
-  //   // console.log(res.data[1].computerRoomName.substring(0, 2));
-  //   // 假设获取的数据为 res.data
-  //   res = [
-  //     {
-  //       course_name: "网络操作系统",
-  //       population: "54",
-  //       teacher_name: "杨爱民",
-  //       cycle: "19",
-  //       week_lesson_times: 3,
-  //       class_name: "21计算机网络01（驻）",
-  //       id: 1,
-  //       software_name: "cisco packet tracer",
-  //       teacher_room: "网络",
-  //       is_ok: 0,
-  //     },
-  //   ];
-  //   console.log(res);
-  //   const uniqueRooms = removeDuplicateRooms(res);
-  //   tableData.value = uniqueRooms; // 将处理后的数据存储在 tableData 中
-  //   room.value = uniqueRooms; // 将处理后的数据存储在 room 中
-  //   console.log(tableData.value);
-  // });
+  axios({
+    method: "get",
+    url: `http://49.235.107.169:5000/api/v1/get_main_class_by_field`,
+  }).then((res) => {
+    // console.log(res.data[1].computerRoomName.substring(0, 2));
+    // 假设获取的数据为 res.data
+
+    console.log(res.data);
+    const uniqueRooms = removeDuplicateRooms(res.data);
+    tableData.value = uniqueRooms; // 将处理后的数据存储在 tableData 中
+    room.value = uniqueRooms; // 将处理后的数据存储在 room 中
+    console.log(tableData.value);
+    console.log(room.value);
+  });
 
   /******************************************************
    * 因为是直接用后端的机房数据做表头，但后端机房有好多个重复的，所以处理数据，确保表头的每个机房只渲染一次
@@ -143,9 +136,9 @@ onMounted(() => {
     const addedRoomNames = new Set();
     for (const room of data) {
       // 判断机房名称是否已经被添加，若未添加，则添加到 uniqueRooms 数组中
-      if (!addedRoomNames.has(room.computerRoomName)) {
+      if (!addedRoomNames.has(room.computer_room_name)) {
         uniqueRooms.push(room);
-        addedRoomNames.add(room.computerRoomName);
+        addedRoomNames.add(room.computer_room_name);
       }
     }
     return uniqueRooms;
@@ -181,10 +174,10 @@ const selectRoom = (selectedRoom) => {
   room.value = []; //每次点击下拉框room都会清0再更新
 
   for (let i = 0; i < tableData.value.length; i++) {
-    // console.log(tableData.value[i].computerRoomName.substring(0, 1));
+    // console.log(tableData.value[i].computer_room_name.substring(0, 1));
     // console.log(selectedRoom);
-    if (tableData.value[i].computerRoomName.substring(0, 1) == selectedRoom) {
-      console.log(tableData.value.computerRoomName);
+    if (tableData.value[i].computer_room_name.substring(0, 1) == selectedRoom) {
+      console.log(tableData.value[i].computer_room_name);
       room.value[a] = tableData.value[i];
       a++;
     } else {
