@@ -14,23 +14,26 @@
           ${room.id}
           ${room.teacherRoom}
           ${room.population}
-          ${room.computerRoomName}
+          ${room.computer_room_name}
           ${room.lesson}
           `"
     >
       <template #reference>
-        {{ room.courseName }}
-
+        {{ room.computer_room_name }}
+        {{ rawData.id }}
+        {{ rawData.teacher_name }}
+        {{ rawData.id }}
+        {{ rawData.is_ok }}
         <p>6515</p>
       </template>
     </el-popover>
   </div>
   <!-- *********以下为原始课表的卡片********************************** -->
-  <div>
+  <!-- <div>
     {{ rawData.teacher_name }}<br />
     id:{{ rawData.id }}<br />
     isok:{{ rawData.is_ok }}<br />
-  </div>
+  </div> -->
 </template>
 
 <script setup>
@@ -64,7 +67,7 @@ const props = defineProps({
     // type: String,
     default: "null",
   },
-  computerRoomName: {
+  computer_room_name: {
     // type: String,
     default: "null",
   },
@@ -107,14 +110,27 @@ const day = {
  */
 function determine_place() {
   let weekDayNumber = day[props.weekDay];
-  // console.log(weekDayNumber);
+  let my_lesson = eval(props.item.time);
+  let back_lesson = eval(props.room.lesson);
+  console.log(my_lesson);
   if (
-    props.room.computerRoomName == props.computerRoomName &&
-    props.room.lesson == props.item.time &&
-    props.room.day == weekDayNumber
+    props.room.computer_room_name == props.computer_room_name ||
+    props.room.lesson == props.item.time
   ) {
-    // console.log(props.item.time);
-    return true;
+    if (props.room.day == weekDayNumber) {
+      if (my_lesson == back_lesson) {
+        console.log("全节");
+        return true;
+      }
+      if (my_lesson > back_lesson) {
+        console.log("下半节");
+        return true;
+      }
+      if (my_lesson < back_lesson) {
+        console.log("上半节");
+        return true;
+      }
+    }
   }
 }
 /******************************************************
