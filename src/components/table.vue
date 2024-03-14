@@ -39,7 +39,7 @@
                   :room="room"
                   :weekDay="weekDay"
                   :item="item"
-                  :computer_room_name="computer_room_name"
+                  :computer_room_name="row.computer_room_name"
                 ></card>
                 <!-- </div> -->
               </template>

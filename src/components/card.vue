@@ -16,26 +16,15 @@
           ${room.population}
           ${room.computer_room_name}
           ${room.lesson}
-          ${rawData.id}
-          ${rawData.is_ok}
           `"
     >
       <template #reference>
         {{ room.computer_room_name }}
-        {{ rawData.id }}
-        {{ rawData.teacher_name }}
-        {{ rawData.id }}
-        {{ rawData.is_ok }}
-        <p>6515</p>
       </template>
     </el-popover>
   </div>
   <!-- *********以下为原始课表的卡片********************************** -->
-  <!-- <div>
-    {{ rawData.teacher_name }}<br />
-    id:{{ rawData.id }}<br />
-    isok:{{ rawData.is_ok }}<br />
-  </div> -->
+  <div v-if="raw_display()"></div>
 </template>
 
 <script setup>
@@ -79,7 +68,8 @@ import axios from "axios";
 // import { element } from "element-plus/es/locale";
 import { ref, onMounted, watch } from "vue";
 const localRawData = ref([]);
-// console.log(props.computer_room_name);
+console.log(props.computer_room_name);
+// console.log(rawData);
 // 因为后端返回的星期是day:2这种，
 // 而我设定为props.weekDay是星期一这种格式，所以需要转换一下格式
 const day = {
@@ -137,6 +127,7 @@ function determine_place() {
   // 返回 false asx/aZ表示当前卡片不需要显示
 }
 
+function raw_display() {}
 /*************************************************************************
  * 判断是否为整节课，或者上半节，下半节
  */
@@ -221,13 +212,6 @@ function handleDragend(e) {
   padding: 10px; /*10px内边距*/
   box-sizing: border-box; /*盒子模型 加了box-sizing:border-box属性，padding和border的值就不会在影响元素的宽高，相当于把padding和border的值都算在content里，盒子模型会自动根据padding和border的值来调整content的值，就不需要手动调整*/
   cursor: move;
-}
-
-.remove-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: #eb7c7c;
 }
 
 .el-button + .el-button {
