@@ -7,15 +7,17 @@
       :width="200"
       trigger="hover"
       :content="`
-          ${room.courseName} 
-          ${room.className}
+          ${room.course_name} 
+          ${room.class_name}
           ${room.cycle}
-          ${room.teacherName}
+          ${room.teacher_name}
           ${room.id}
-          ${room.teacherRoom}
+          ${room.teacher_room}
           ${room.population}
           ${room.computer_room_name}
           ${room.lesson}
+          ${rawData.id}
+          ${rawData.is_ok}
           `"
     >
       <template #reference>
@@ -47,16 +49,16 @@ const props = defineProps({
     default: "null",
   },
   rawData: {
-    type: Object,
-    default: () => [],
+    type: Array,
+    default: () => [], //懒加载
   },
   tableData: {
     // type: Array,
     default: "null",
   },
   room: {
-    // type: Array,
-    default: "null1",
+    type: Object,
+    // default: "null",
   },
   weekDay: {
     // type: String,
@@ -74,9 +76,10 @@ const props = defineProps({
 }); // 定义props
 
 import axios from "axios";
+// import { element } from "element-plus/es/locale";
 import { ref, onMounted, watch } from "vue";
 const localRawData = ref([]);
-// console.log(computerRoomName);
+// console.log(props.computer_room_name);
 // 因为后端返回的星期是day:2这种，
 // 而我设定为props.weekDay是星期一这种格式，所以需要转换一下格式
 const day = {
@@ -109,30 +112,54 @@ const day = {
  *
  */
 function determine_place() {
+  // console.log(props.rawData);
+  // console.log(props.weekDay);
   let weekDayNumber = day[props.weekDay];
-  let my_lesson = eval(props.item.time);
-  let back_lesson = eval(props.room.lesson);
-  console.log(my_lesson);
-  if (
-    props.room.computer_room_name == props.computer_room_name ||
-    props.room.lesson == props.item.time
-  ) {
+  if (props.room.computer_room_name == props.computer_room_name) {
     if (props.room.day == weekDayNumber) {
-      if (my_lesson == back_lesson) {
-        console.log("全节");
-        return true;
-      }
-      if (my_lesson > back_lesson) {
-        console.log("下半节");
-        return true;
-      }
-      if (my_lesson < back_lesson) {
-        console.log("上半节");
-        return true;
+      //使用back_lesson，my_lesson 用于存储后端和前端的课程时间如1-2节，3-4节 0-6节，7-0节
+      //提取12，06，70来判断是否属于这一格，如果俩数组有相同的元素则返回true，显示卡片
+      var back_lesson = new Array();
+      var my_lesson = new Array();
+      back_lesson[0] = props.room.lesson.charAt(0);
+      back_lesson[1] = props.room.lesson.charAt(2);
+      my_lesson[0] = props.item.time.charAt(0);
+      my_lesson[1] = props.item.time.charAt(2);
+      for (let i = 0; i < back_lesson.length; i++) {
+        for (let j = 0; j < my_lesson.length; j++) {
+          if (back_lesson[i] === my_lesson[j]) {
+            return true; // 如果找到相同的元素，则返回 true
+          }
+        }
       }
     }
   }
+  // 返回 false asx/aZ表示当前卡片不需要显示
 }
+
+/*************************************************************************
+ * 判断是否为整节课，或者上半节，下半节
+ */
+function judgment() {
+  //判断是否为整节课，或者上半节，下半节
+  let my_lesson = eval(props.item.time);
+  let back_lesson = eval(props.room.lesson);
+  if (my_lesson == back_lesson) {
+    console.log("全节");
+    return true;
+  }
+  if (my_lesson > back_lesson) {
+    console.log("下半节");
+    return true;
+  }
+  if (my_lesson < back_lesson) {
+    console.log("上半节");
+    return true;
+  } else {
+    return false;
+  }
+}
+
 /******************************************************
  * 以下为拖拽相关代码
  *
@@ -164,32 +191,20 @@ function handleDragend(e) {
 //   console.log(e.target);
 // }
 /****************************************************************************
+0
  * 以下为双击显示代码
  */
-var isShow = ref(false);
-function Complete_information() {
-  console.log(isShow);
-  isShow = true;
-  console.log(isShow);
-}
-function test() {
-  console.log(isShow);
-  isShow = false;
-  console.log(isShow);
-}
-//  [{
-// "courseName": "无人机模拟训练",
-//   "className": "23数媒01(专)",
-//   "software": "无人机模拟器",
-//   "day": "2",
-//   "cycle": "1/16",
-//   "teacherName": "钱永涛",
-//   "id": 1,
-//   "teacherRoom": "None",
-//   "population": "50",
-//   "computerRoomName": "B501",
-//   "lesson": "1-2"
-// },]
+// var isShow = ref(false);
+// function Complete_information() {
+//   console.log(isShow);
+//   isShow = true;
+//   console.log(isShow);
+// }
+// function test() {
+//   console.log(isShow);
+//   isShow = false;
+//   console.log(isShow);
+// }
 </script>
 <style>
 .ka {

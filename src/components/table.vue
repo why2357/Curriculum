@@ -39,13 +39,7 @@
                   :room="room"
                   :weekDay="weekDay"
                   :item="item"
-                  :computer_room_name="row.computer_room_name"
-                  @dragover="handleDragOver"
-                  @dragenter="handleDragEnter"
-                  @dragend="handleDragEnd"
-                  @drop="handleDrop"
-                  @mousedown="mouse_down"
-                  @mouseup="mouse_up"
+                  :computer_room_name="computer_room_name"
                 ></card>
                 <!-- </div> -->
               </template>
@@ -75,10 +69,12 @@
 
 <script setup>
 import { ArrowDown } from "@element-plus/icons-vue";
+import { useMain_classStore } from "../store/main_class.js";
 import axios from "axios";
 import { ref, onMounted, computed } from "vue";
 import card from "./card.vue";
 
+const main_classStore = useMain_classStore(); //使用pinia
 let floor = ref([]);
 let tableData = ref([]);
 let room = ref([]); //用于存储所选楼层的数据,
@@ -120,10 +116,13 @@ onMounted(() => {
     // console.log(res.data[1].computerRoomName.substring(0, 2));
     // 假设获取的数据为 res.data
     console.log(res);
+    main_classStore.$patch({ data: res.data });
+
+    console.log(main_classStore.data);
     const uniqueRooms = removeDuplicateRooms(res.data); // 调用 removeDuplicateRooms 函数处理数据
     tableData.value = uniqueRooms; // 将处理后的数据存储在 tableData 中
     room.value = uniqueRooms; // 将处理后的数据存储在 room 中
-    console.log(tableData.value);
+    // console.log(tableData.value);
   });
 
   /******************************************************
@@ -172,7 +171,7 @@ const selectRoom = (selectedRoom) => {
   room.value = []; //每次点击下拉框room都会清0再更新
 
   for (let i = 0; i < tableData.value.length; i++) {
-    // console.log(tableData.value[i].computerRoomName.substring(0, 1));
+    // console.log(tableData.value[i].computer_room_name.substring(0, 1));
     // console.log(selectedRoom);
     if (tableData.value[i].computer_room_name.substring(0, 1) == selectedRoom) {
       console.log(tableData.value.computer_room_name);
