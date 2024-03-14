@@ -115,16 +115,13 @@ function determine_place() {
       back_lesson[1] = props.room.lesson.charAt(2);
       my_lesson[0] = props.item.time.charAt(0);
       my_lesson[1] = props.item.time.charAt(2);
-      for (let i = 0; i < back_lesson.length; i++) {
-        for (let j = 0; j < my_lesson.length; j++) {
-          if (back_lesson[i] === my_lesson[j]) {
-            return true; // 如果找到相同的元素，则返回 true
-          }
-        }
+      if (back_lesson[0] === my_lesson[0] || back_lesson[1] === my_lesson[1]) {
+        return true; // 如果找到相同的元素，则返回 true
+      } else {
+        return false;
       }
     }
   }
-  // 返回 false asx/aZ表示当前卡片不需要显示
 }
 
 function raw_display() {}
