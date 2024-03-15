@@ -123,20 +123,8 @@ onMounted(() => {
     const uniqueRooms = removeDuplicateRooms(res.data); // 调用 removeDuplicateRooms 函数处理数据
     tableData.value = uniqueRooms; // 将处理后的数据存储在 tableData 中
     room.value = uniqueRooms; // 将处理后的数据存储在 room 中
-<<<<<<< HEAD
     // console.log(tableData.value);
-=======
     console.log(tableData.value);
-=======
-
-    console.log(res.data);
-    const uniqueRooms = removeDuplicateRooms(res.data);
-    tableData.value = uniqueRooms; // 将处理后的数据存储在 tableData 中
-    room.value = uniqueRooms; // 将处理后的数据存储在 room 中
-    console.log(tableData.value);
-    console.log(room.value);
->>>>>>> 39e2870dce973008debb4dadcb21a2dd161e3ca5
->>>>>>> 9d51cc613c1ed7d65adb8a33bc328de3cf19ca77
   });
 
   /******************************************************
@@ -188,11 +176,6 @@ const selectRoom = (selectedRoom) => {
     // console.log(tableData.value[i].computer_room_name.substring(0, 1));
     // console.log(selectedRoom);
     if (tableData.value[i].computer_room_name.substring(0, 1) == selectedRoom) {
-<<<<<<< HEAD
-      console.log(tableData.value.computer_room_name);
-=======
-      console.log(tableData.value[i].computer_room_name);
->>>>>>> 39e2870dce973008debb4dadcb21a2dd161e3ca5
       room.value[a] = tableData.value[i];
       a++;
     } else {
