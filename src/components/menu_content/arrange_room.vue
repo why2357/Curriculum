@@ -26,7 +26,7 @@ onMounted(() => {
   color: red;
   height: 100px;
   width: 100px;
-  background-color: aqua;
+  /* background-color: aqua; */
   float: left;
   border: 2px solid black;
 }

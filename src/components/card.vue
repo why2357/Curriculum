@@ -9,13 +9,19 @@
       :content="`
           ${room.course_name} 
           ${room.class_name}
+          ${room.course_name} 
+          ${room.class_name}
           ${room.cycle}
           ${room.teacher_name}
+          ${room.teacher_name}
           ${room.id}
+          ${room.teacher_room}
           ${room.teacher_room}
           ${room.population}
           ${room.computer_room_name}
           ${room.lesson}
+          ${rawData.id}
+          ${rawData.is_ok}
           `"
     >
       <template #reference>
@@ -40,12 +46,16 @@ const props = defineProps({
   rawData: {
     type: Array,
     default: () => [], //懒加载
+    type: Array,
+    default: () => [], //懒加载
   },
   tableData: {
     // type: Array,
     default: "null",
   },
   room: {
+    type: Object,
+    // default: "null",
     type: Object,
     // default: "null",
   },
@@ -58,10 +68,17 @@ const props = defineProps({
     // type: String,
     default: "null",
   },
+<<<<<<< HEAD
   computer_room_name: {
     // type: String,
     default: "null",
   },
+=======
+  // computer_room_name: {
+  //   // type: String,
+  //   default: "null",
+  // },
+>>>>>>> 39e2870dce973008debb4dadcb21a2dd161e3ca5
 }); // 定义props
 
 import axios from "axios";
@@ -146,6 +163,7 @@ function judgment() {
   } else {
     return false;
   }
+  // 返回 false asx/aZ表示当前卡片不需要显示
 }
 
 /******************************************************
@@ -180,8 +198,20 @@ function handleDragend(e) {
 // }
 /****************************************************************************
 0
+0
  * 以下为双击显示代码
  */
+// var isShow = ref(false);
+// function Complete_information() {
+//   console.log(isShow);
+//   isShow = true;
+//   console.log(isShow);
+// }
+// function test() {
+//   console.log(isShow);
+//   isShow = false;
+//   console.log(isShow);
+// }
 // var isShow = ref(false);
 // function Complete_information() {
 //   console.log(isShow);
