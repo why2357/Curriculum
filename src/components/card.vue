@@ -68,17 +68,10 @@ const props = defineProps({
     // type: String,
     default: "null",
   },
-<<<<<<< HEAD
   computer_room_name: {
     // type: String,
     default: "null",
   },
-=======
-  // computer_room_name: {
-  //   // type: String,
-  //   default: "null",
-  // },
->>>>>>> 39e2870dce973008debb4dadcb21a2dd161e3ca5
 }); // 定义props
 
 import axios from "axios";

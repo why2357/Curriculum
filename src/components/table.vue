@@ -115,10 +115,8 @@ onMounted(() => {
   }).then((res) => {
     // console.log(res.data[1].computerRoomName.substring(0, 2));
     // 假设获取的数据为 res.data
-<<<<<<< HEAD
     console.log(res);
     main_classStore.$patch({ data: res.data });
-
     console.log(main_classStore.data);
     const uniqueRooms = removeDuplicateRooms(res.data); // 调用 removeDuplicateRooms 函数处理数据
     tableData.value = uniqueRooms; // 将处理后的数据存储在 tableData 中
@@ -167,7 +165,6 @@ axios({
 如果tableData中的computerRoomName的前两位（B501）与selectedRoom（B5）相同，
 则只显示本层的机房B5
 **************************************************** */
-
 const selectRoom = (selectedRoom) => {
   let a = 0;
   room.value = []; //每次点击下拉框room都会清0再更新
