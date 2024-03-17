@@ -7,7 +7,6 @@
         prop="computer_room_name"
         width="150"
       />
-
       <el-table-column
         v-for="(weekDay, windex) of weekDay"
         :label="weekDay"
@@ -37,6 +36,7 @@
                 <card
                   v-for="room of room"
                   :room="room"
+                  :Vue_row="row"
                   :weekDay="weekDay"
                   :item="item"
                   :computer_room_name="row.computer_room_name"
@@ -113,16 +113,11 @@ onMounted(() => {
     method: "get",
     url: `http://49.235.107.169:5000/api/v1/get_main_class_by_field`,
   }).then((res) => {
-    // console.log(res.data[1].computerRoomName.substring(0, 2));
     // 假设获取的数据为 res.data
-    console.log(res);
-    main_classStore.$patch({ data: res.data });
-    console.log(main_classStore.data);
+    main_classStore.$patch({ data: res.data }); //将数据存储在store中
     const uniqueRooms = removeDuplicateRooms(res.data); // 调用 removeDuplicateRooms 函数处理数据
     tableData.value = uniqueRooms; // 将处理后的数据存储在 tableData 中
     room.value = uniqueRooms; // 将处理后的数据存储在 room 中
-    // console.log(tableData.value);
-    console.log(tableData.value);
   });
 
   /******************************************************
@@ -155,9 +150,7 @@ axios({
       floor.value.push(newFloorValue);
     }
   }
-  // console.log(floor.value);
 });
-// });
 
 /*
 更新tableData，显示所选楼层的数据
@@ -195,58 +188,6 @@ const test = computed(() => {
  * 以下为拖拽相关代码
  *
  */
-
-let targetCell = null;
-let temp = null;
-let aaa = null;
-let bbb = null;
-let ccc = null;
-
-function handleDrop(e) {
-  //被拖放到有效的放置目标上时
-  console.log(e.target, "被拖放到有效的放置目标上时");
-  aaa = e.target;
-}
-
-function handleDragEnter(e) {
-  //进来的时候
-  const tar = e.target;
-  const tagName = tar.tagName.toLowerCase(); //获取鼠标进入的元素的标签名，并将其转换为小写。
-  // console.log(tagName);
-  targetCell = tagName !== "div" ? null : tar;
-  console.log(targetCell, "targetCell");
-
-  // console.log(e.target, "进来的时候");
-}
-
-function handleDragEnd(e) {
-  //放开鼠标的时候
-
-  // console.log(e.target, "放开鼠标的时候");
-  console.log(targetCell, "放开鼠标的时候");
-  //创造一个card标签
-}
-function handleDragOver(e) {
-  //划过的时候
-  // console.log(e.target);
-  // e.target = temp;
-  // e.preventDefault();
-}
-
-function mouse_down(e) {
-  //鼠标按钮在元素内按下
-  // console.log(e.target);
-  // console.log("mouse_down");
-  // console.log(e.target.dataset.key);
-  // temp = e.target;
-}
-function mouse_up(e) {
-  //鼠标按钮在元素内释放
-  // console.log(e.target);
-  // console.log("mouse_up");
-  // console.log(temp);
-  // e.target = temp;
-}
 </script>
 
 <style>

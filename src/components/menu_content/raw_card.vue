@@ -22,9 +22,6 @@
         {{ rawData.teacher_name }}
         {{ rawData.id }} isok:{{ rawData.is_ok }}
         {{ rawData.id }}
-        {{ rawData.teacher_name }}
-        {{ rawData.id }}
-        {{ rawData.is_ok }}
       </template>
     </el-popover>
   </div>

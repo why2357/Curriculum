@@ -1,6 +1,15 @@
 <template>
   <!-- *******************以下为详细课表的卡片********************** -->
-  <div class="ka" draggable="true" :data-key="cardKey" v-if="determine_place()">
+
+  <div
+    class="ka"
+    :data-key="cardKey"
+    v-if="determine_place()"
+    draggable="true"
+    @dragstart="handleDragstart(room)"
+    @dragover.prevent="$event.preventDefault()"
+    @drop="handleDrop(room)"
+  >
     <el-popover
       placement="top-start"
       title="Title"
@@ -8,20 +17,6 @@
       trigger="hover"
       :content="`
           ${room.course_name} 
-          ${room.class_name}
-          ${room.course_name} 
-          ${room.class_name}
-          ${room.cycle}
-          ${room.teacher_name}
-          ${room.teacher_name}
-          ${room.id}
-          ${room.teacher_room}
-          ${room.teacher_room}
-          ${room.population}
-          ${room.computer_room_name}
-          ${room.lesson}
-          ${rawData.id}
-          ${rawData.is_ok}
           `"
     >
       <template #reference>
@@ -29,8 +24,6 @@
       </template>
     </el-popover>
   </div>
-  <!-- *********以下为原始课表的卡片********************************** -->
-  <div v-if="raw_display()"></div>
 </template>
 
 <script setup>
@@ -43,9 +36,7 @@ const props = defineProps({
     type: String,
     default: "null",
   },
-  rawData: {
-    type: Array,
-    default: () => [], //懒加载
+  Vue_row: {
     type: Array,
     default: () => [], //懒加载
   },
@@ -54,8 +45,6 @@ const props = defineProps({
     default: "null",
   },
   room: {
-    type: Object,
-    // default: "null",
     type: Object,
     // default: "null",
   },
@@ -75,11 +64,12 @@ const props = defineProps({
 }); // 定义props
 
 import axios from "axios";
+import { useDragDataStore } from "../store/dragData.js";
 // import { element } from "element-plus/es/locale";
-import { ref, onMounted, watch } from "vue";
-const localRawData = ref([]);
-console.log(props.computer_room_name);
-// console.log(rawData);
+import { ref, onMounted } from "vue";
+
+const DragDataStore = useDragDataStore(); //使用pinia
+const room = ref(props.room); //props.room是只读的，不能修改需要转换为ref类型
 // 因为后端返回的星期是day:2这种，
 // 而我设定为props.weekDay是星期一这种格式，所以需要转换一下格式
 const day = {
@@ -92,20 +82,9 @@ const day = {
   星期七: "7",
 };
 
-/**
- * 以下为获得处理原始课表相关代码
- * 使用props.rawData接收父组件传递的数据,使用watch 监听rawData变化
- * rawData初始为[],当rawData变化时，将其赋值给localRawData, 从而实现数据的传递
- */
-// 使用 watch 监听 rawData 变化
+// 在 setup 函数中使用组件的生命周期钩子
+onMounted(() => {});
 
-// watch(
-//   () => props.rawData,
-//   (newRawData) => {
-//     console.log(newRawData);
-//     localRawData.value = newRawData;
-//   }
-// );
 /****************************************************************************
  *利用表格中的机房，星期，时间判断该数据是否处于这一格
  *如果后端的机房，星期，时间和前端一样则通过
@@ -134,7 +113,6 @@ function determine_place() {
   }
 }
 
-function raw_display() {}
 /*************************************************************************
  * 判断是否为整节课，或者上半节，下半节
  */
@@ -156,66 +134,23 @@ function judgment() {
   } else {
     return false;
   }
-  // 返回 false asx/aZ表示当前卡片不需要显示
+  // 返回 false 表示当前卡片不需要显示
 }
 
-/******************************************************
+/*********************************************************************************
  * 以下为拖拽相关代码
- *
+ **
  */
-const emit = defineEmits(["handleDragEnd"]); // emit 用于向父组件触发事件。defineEmits 是为了明确声明组件可以触发的事件
 
-function handleDragstart(e) {
-  /**
-   * 这行代码的作用是设置一个HTML元素的透明度。
-   * tar 变量是一个 DOM 元素，通过 e.target 获取到，
-   * 然后使用 style 属性来访问元素的 CSS 样式。
-   */
-  const tar = e.target;
-  tar.style.opacity = 0.4;
-}
+const handleDragstart = (data) => {
+  DragDataStore.dragData.value = data;
+  // console.log(DragDataStore.dragData);
+};
 
-function handleDragend(e) {
-  const tar = e.target;
-  tar.style.opacity = 1;
-  /**
-   * handleDragEndHandler 函数会在子组件触发 handleDragEnd 事件时被调用，
-   * 并且会接收到传递过来的目标元素 tar
-   * tar 是传递给事件处理函数的参数，这里是拖拽结束时的目标元素。
-   */
-  emit("handleDragEnd", tar);
-}
-// function mouse_down(e) {
-//   console.log("mouse_enter");
-//   console.log(e.target);
-// }
-/****************************************************************************
-0
-0
- * 以下为双击显示代码
- */
-// var isShow = ref(false);
-// function Complete_information() {
-//   console.log(isShow);
-//   isShow = true;
-//   console.log(isShow);
-// }
-// function test() {
-//   console.log(isShow);
-//   isShow = false;
-//   console.log(isShow);
-// }
-// var isShow = ref(false);
-// function Complete_information() {
-//   console.log(isShow);
-//   isShow = true;
-//   console.log(isShow);
-// }
-// function test() {
-//   console.log(isShow);
-//   isShow = false;
-//   console.log(isShow);
-// }
+const handleDrop = (data) => {
+  console.log(data);
+  room.value = DragDataStore.dragData.value;
+};
 </script>
 <style>
 .ka {

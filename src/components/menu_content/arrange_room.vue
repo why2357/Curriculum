@@ -16,7 +16,7 @@ onMounted(() => {
     url: `http://49.235.107.169:5000/api/v1/get_origin_class_by_field`,
   }).then((res) => {
     rawData.value = res.data;
-    console.log(rawData.value);
+    // console.log(rawData.value);
   });
 });
 </script>
