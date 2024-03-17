@@ -9,6 +9,7 @@
     @dragstart="handleDragstart(room)"
     @dragover.prevent="$event.preventDefault()"
     @drop="handleDrop(room)"
+    @dragend="dragend(room)"
   >
     <el-popover
       placement="top-start"
@@ -21,6 +22,8 @@
     >
       <template #reference>
         {{ room.computer_room_name }}
+        {{ room.day }}
+        {{ room.lesson }}
       </template>
     </el-popover>
   </div>
@@ -143,13 +146,28 @@ function judgment() {
  */
 
 const handleDragstart = (data) => {
-  DragDataStore.dragData.value = data;
-  // console.log(DragDataStore.dragData);
+  DragDataStore.dragData = data; //将本卡片的数据存储在store中
+  const tempday_target = data.day;
+  const templesson_target = data.lesson;
 };
 
 const handleDrop = (data) => {
-  console.log(data);
-  room.value = DragDataStore.dragData.value;
+  const templesson = DragDataStore.dragData.lesson;
+  const tempday = DragDataStore.dragData.day;
+
+  console.log(tempday, templesson);
+
+  data.lesson = templesson;
+  data.day = tempday;
+  DragDataStore.target = data;
+
+  room.value = DragDataStore.dragData; //将拖拽的数据显示到room中
+};
+
+const dragend = (room) => {
+  // DragDataStore.target.lesson = templesson_target;
+  // DragDataStore.target.day = tempday_target;
+  room.value = DragDataStore.target; //将目标数据显示到卡片中
 };
 </script>
 <style>
