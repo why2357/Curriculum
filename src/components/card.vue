@@ -149,25 +149,30 @@ const handleDragstart = (data) => {
   DragDataStore.dragData = data; //将本卡片的数据存储在store中
   const tempday_target = data.day;
   const templesson_target = data.lesson;
+  console.log(DragDataStore.dragData);
 };
 
 const handleDrop = (data) => {
-  const templesson = DragDataStore.dragData.lesson;
-  const tempday = DragDataStore.dragData.day;
+  // const templesson = DragDataStore.dragData.lesson;
+  // const tempday = DragDataStore.dragData.day;
 
-  console.log(tempday, templesson);
+  // console.log(tempday, templesson);
 
-  data.lesson = templesson;
-  data.day = tempday;
+  // data.lesson = templesson;
+  // data.day = tempday;
   DragDataStore.target = data;
+  console.log(DragDataStore.target);
 
   room.value = DragDataStore.dragData; //将拖拽的数据显示到room中
 };
 
-const dragend = (room) => {
+const dragend = (data) => {
+  console.log(room.value);
+
   // DragDataStore.target.lesson = templesson_target;
   // DragDataStore.target.day = tempday_target;
   room.value = DragDataStore.target; //将目标数据显示到卡片中
+  console.log(room.value);
 };
 </script>
 <style>
